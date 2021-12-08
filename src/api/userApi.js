@@ -54,6 +54,22 @@ export const buyPokemon = async (id) => {
     }
 }
 
+export const lostGame=async(user)=>{
+    if(user.username!=="guest"){
+        const res = await fetchWithAuth("/user/add-game",{},"post");
+        return res.data;
+    }
+    return user;
+}
+
+export const winGame=async(user)=>{
+    if(user.username!=="guest"){
+        const res = await fetchWithAuth("/user/add-win",{},"post");
+        return res.data;
+    }
+    return user;
+}
+
 
 const fetchWithAuth = async (url, data, action) => {
     try {
@@ -80,3 +96,5 @@ const fetchWithAuth = async (url, data, action) => {
         throw (err)
     }
 }
+
+

@@ -14,8 +14,8 @@ export default function Board({ cards, setCards,haveToSell }) {
     const { pokemons } = useSelector(state => state?.pokemons);
     const dispatch = useDispatch();
 
-    const createPokemon = (number,owner=null) => {
-        return { pokemon: pokemons[number], owner:owner===null?1:owner, houses: 2 };
+    const createPokemon = (number,owner=null,houses=null) => {
+        return { pokemon: pokemons[number], owner:owner===null?1:owner, houses: houses||3 };
     }
 
     useEffect(() => {
@@ -27,7 +27,7 @@ export default function Board({ cards, setCards,haveToSell }) {
         }
 
         else {
-            const arr = ["go", createPokemon(0), createPokemon(1,0), createPokemon(2,0), "tax", createPokemon(3), createPokemon(4), createPokemon(5), "prize", "card", "store", createPokemon(6), createPokemon(7), createPokemon(8), "prize", createPokemon(9), "tax", createPokemon(10), createPokemon(11), "card", "jail", createPokemon(12), createPokemon(13), createPokemon(14), "card", createPokemon(15), createPokemon(16), "tax", "card", createPokemon(17), "store", "tax", "prize", createPokemon(18), createPokemon(19), createPokemon(20), "card", createPokemon(21), createPokemon(22), createPokemon(23)];
+            const arr = ["go", createPokemon(0), createPokemon(1), createPokemon(2), "tax", createPokemon(3), createPokemon(4), createPokemon(5), "prize", "card", "store", createPokemon(6), createPokemon(7), createPokemon(8), "prize", createPokemon(9), "tax", createPokemon(10), createPokemon(11), "card", "jail", createPokemon(12), createPokemon(13,0,1), createPokemon(14), "card", createPokemon(15), createPokemon(16), "tax", "card", createPokemon(17), "store", "tax", "prize", createPokemon(18), createPokemon(19), createPokemon(20), "card", createPokemon(21), createPokemon(22), createPokemon(23)];
             setCards(arr);
         }// eslint-disable-next-line
     }, [pokemons])

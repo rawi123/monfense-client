@@ -44,7 +44,6 @@ export default function Menu() {
     const openBackPack = () => {
         setBackPack("store")
     }
-
     return (
         <>
             <Store classToPut={store} setStore={setStore} />
