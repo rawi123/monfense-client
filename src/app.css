@@ -1,0 +1,88 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.flex{
+    display: flex;
+} 
+.center{
+    align-items: center;
+    justify-content: center;
+}
+.flex-start{
+    justify-content: flex-start;
+    /* align-items: center; */
+}
+.column{
+    flex-direction: column;
+}
+.space-between{
+    justify-content: space-between;
+}
+.relative{
+    position: relative;
+}
+
+.full{
+    width: 100%;
+    height: 100%;
+}
+
+.link{
+    text-decoration: none;
+    font-size: 1.1rem;
+    color: white;
+    position: relative;
+    overflow: hidden;
+    margin-top: 2px;
+}
+.link::before{
+    position: absolute;
+    content: "";
+    width: 100%;
+    height: 94%;
+    border-bottom: 1px solid black;
+    left: -100%;
+    transition: all .3s ease;
+}
+.link:hover::before{
+    left: 0;
+}
+
+/*  */
+.pokeball{
+    width: 40px;
+    animation: rotate 4s linear infinite;
+}
+.pokeball:hover{
+    animation: rotate 1s linear infinite;
+}
+::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	border-radius: 10px;
+	background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar
+{
+	width: 9px;
+	background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+    background: linear-gradient(45deg,black 15% ,#D62929 25% ,gray 30%);
+
+
+
+}
+
+@keyframes rotate {
+    to{
+        transform: rotate(360deg);
+    }
+}

@@ -1,0 +1,94 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap");
+
+.store{
+    position: absolute;
+    width: 50%;
+    height: 70%;
+    background: linear-gradient( #1E2533 , #eef2f3);
+    color: white;
+    border-radius: 15px;
+    border: 7px solid gray;
+    left: 25%;
+    top: 15%;
+    z-index: 10;
+    animation: appear .4s ease forwards;
+    
+}
+
+.store h2{
+    margin-top: 0.6rem;
+    font-size: 2rem;
+
+}
+.store-items{
+    overflow: auto;
+    padding: 1rem;
+    margin-top: 2rem;
+}
+.card-header {
+    width: 250px;
+    height: 105px;
+    background: linear-gradient(to bottom, #1E2533 , #eef2f3);
+
+    position: absolute;
+    top: -10%;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    clip-path: polygon(0 0, 100% 0%, 100% 75%, 50% 100%, 0 75%);
+  }
+  .card-header h2{
+      color: white;
+      text-shadow: black 2.5px 1.5px;
+      font-family: "Roboto", sans-serif;
+     }
+  
+.buy-button{
+    color: white;
+    box-shadow: black 1px 0.5px 3px 1px;
+    margin-left: 10px !important;
+}
+.single-poke-card{
+    background: linear-gradient(to top left,#9BA9C5 ,#374157);
+    box-shadow: black 2px 4px 4px 1px !important;
+    outline: .3px solid gray;
+  color: white !important;
+    max-width: 450px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.none{
+    position: absolute;
+    width: 50%;
+    height: 70%;
+    background: linear-gradient(to bottom, #1E2533 , #eef2f3);
+    border-radius: 15px;
+    border: 7px solid gray;
+    left: 25%;
+    top: 15%;
+    z-index: 10;
+    animation: disappear .4s ease forwards;
+}
+.none-absoulute{
+    display: none;
+}
+@keyframes disappear {
+    0%{
+        transform: scale(1);
+    }
+    100%{
+        transform: scale(0);
+    }
+}
+@keyframes appear {
+    0%{
+        transform: scale(0);
+    }
+    100%{
+        transform: scale(1);
+    }
+}
