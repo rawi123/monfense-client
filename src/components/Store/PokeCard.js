@@ -29,6 +29,8 @@ export default function PokeCard({ pokemon, removeBuy, userProp, handelBuyProp }
             if (!enableBuy) {
                 return
             }
+            setEnableBuy(false);
+            console.log("buy")
             if (user.money < pokemon.cost) {
                 error();
                 return;

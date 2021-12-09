@@ -13,7 +13,7 @@ export const playTurn = (players, turn, newPos, cards, pokemons) => {
     const avilablePokemons = playerCurrent.pokemons.length === 24 ? [] : returnAvilablePokemons(playerCurrent, pokemons);
     const rnd = avilablePokemons.length > 0 ? Math.floor(Math.random() * 10 + 1) : Math.floor(Math.random() * 11 + 1);
 
-    let moneyTakeOut = Math.floor(Math.random() * (2001 - 500) + 500);
+    let moneyTakeOut = Math.floor(Math.random() * (1501 - 300) + 300);
     let canPlayFlag = false;
     let haveToSell = false;
     let lost = false;

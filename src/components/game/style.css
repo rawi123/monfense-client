@@ -10,9 +10,9 @@
 .board-container{
     width: 100vmin;
     height: 100vmin;
-    background: yellow;
     position: relative;
 }
+
 .board {
     display: grid;
     height: 100vmin;
@@ -181,6 +181,8 @@
 }
 
 
+
+
 .message-card{
     position: absolute;
     top: 40%;
@@ -263,11 +265,179 @@ strong{
     border-image: linear-gradient(to bottom right, #b827fc 0%, #2c90fc 25%, #b8fd33 50%, #fec837 75%, #fd1892 100%);
     border-image-slice: 1;
 }
+.avilable-hidden{
+    position: absolute;
+    bottom:0;
+    left: 30vw;
+    overflow:auto;
+    overflow-y: hidden;
+    transition: all .4s;
+    width: 60vw;
+}
+
+
+.pokemon-attack{
+    height: 80px;
+    cursor: pointer;
+}
+
+.pokemon-fight{
+    width: 100%;
+    height: 100%;
+    background: url("../../images/fight-background.png")no-repeat center center/cover;
+    position: absolute;
+    left: 0;
+    top: 0;
+    animation: start-fight .8s ease-in-out forwards;
+}
+
+.my-pokemon-fight{
+    position: absolute;
+    right: 50%;
+    bottom: 22%;
+    height: 45%;
+    animation :my-pokemon-appear 1.4s ease-in-out forwards;
+}
+.my-pokemon-fight>div,
+.enemy-pokemon-fight>img{
+    height: 100%;
+}
+
+.enemy-pokemon-fight{
+    position: absolute;
+    height: 25%;
+    right: 20%;
+    top: 15%;
+    animation :pokemon-appear 1.4s ease-in-out forwards;
+}
+.pokemon-hp{
+    color: yellow;
+    background: gray;
+    display: inline;
+    padding: .4rem;
+    border-radius: 10px;
+}
+.heal{
+    position: absolute;
+    animation: fadeOut 1.6s ease-in-out forwards;
+}
+.damage-div{
+    position: absolute;
+    width: 20%;
+    height: 10%;
+    left: 50%;
+    top: 50%;
+    background: url("../../images/damage.png")no-repeat center center/cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: visible;
+}
+
+
+
+.damage{
+    color: white;
+    font-size: 1.2rem;
+}
+
+.attack-animation{
+    animation: attack-animation .6s ease;
+}
+.super-attack-animation{
+    animation: super-attack-animation .6s ease;
+}
+@keyframes super-attack-animation {
+    0%{
+        transform: translateX(40px) scale(0.2);  
+        }
+        20%{
+        transform: translateX(-40px) scale(1.2);  
+        }
+        40%{
+        transform: translateX(30px) scale(0.9);  
+        }
+        6%{
+        transform: translateX(30px) scale(1.1);  
+        }
+        80%{
+        transform: translateX(150px) scale(0);  
+        }
+        1000%{
+        transform: translateX(0px);  
+        }
+}
+
+@keyframes attack-animation {
+    0%{
+    transform: translateX(30px);  
+    }
+    20%{
+    transform: translateX(-30px);  
+    }
+    40%{
+    transform: translateX(20px);  
+    }
+    6%{
+    transform: translateX(20px);  
+    }
+    80%{
+    transform: translateX(10px);  
+    }
+    1000%{
+    transform: translateX(0px);  
+    }
+}
+
+@keyframes fadeOut {
+    0%{
+        opacity: .3;
+    }
+    30%{
+        opacity: 1;
+    }
+    80%{opacity: 1;}
+    100%{
+        opacity: .3;
+    }
+
+}
+@keyframes my-pokemon-appear {
+    0%{
+        transform: translateX(100vw);
+    }    
+    40%{
+        transform: translateX(100vw);
+    }    
+    100%{
+        transform: translateX(0%);
+
+    }
+}
+@keyframes pokemon-appear {
+    0%{
+        transform: translateX(-100vw);
+    }    
+    100%{
+        transform: translateX(0%);
+
+    }
+}
+
+@keyframes start-fight {
+    0%{
+        transform: scale(0);
+    }
+    100%{
+        transform: scale(1);
+    }   
+}
+
 
 @keyframes messageHide {
     0%{
         transform: scale(1) rotate(720deg);
-    }    
+    }
 
     99%{
         transform:scale(0) rotate(0deg) ;
@@ -285,6 +455,13 @@ strong{
 
 }
 
+@media (max-width:1000px) {
+    .enemy-pokemon-fight{
+        height: 25%;
+        top: 15%;
+        right: 10%;
+    }
+}
 @media (max-width:800px) {
     .land{
         font-size: .7rem;
@@ -295,7 +472,6 @@ strong{
     .land{
         font-size: 1.1rem;
     }
-
 }
 
 @media (max-height:800px) {
@@ -343,5 +519,12 @@ strong{
     }
     .soldier{
         width: 15px;
+    }
+    .enemy-pokemon-fight{
+        top: 3%;
+        right: 15%;
+    }
+    .my-pokemon-fight{
+        right: 50%;
     }
 }

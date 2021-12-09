@@ -12,7 +12,7 @@ export default function PlayersCards({ players, currentPlayer, haveToSell, turn 
         if (haveToSell&&turn===currentPlayer.number){
             setClassPut("player-card-backwards")
             setTimeout(()=>setClassPut("player-card"),3000)
-        }
+        }// eslint-disable-next-line
     }, [haveToSell])
     
     return (<>

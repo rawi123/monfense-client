@@ -5,26 +5,31 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setCurrentPlayer } from '../../redux/slices/currentPlayerSlices';
 import LandDetails from './LandDetails';
 import { setPlayers } from '../../redux/slices/playersSlices';
+import AvliablePokemons from './AvliablePokemons';
 
 export default function Play({ card, currentPlayer, endTurn, setCards, turn, cards }) {
     const { players } = useSelector(state => state.players);
     const [store, setStore] = useState("store");
     const [land, setLand] = useState("");
+    const [avilablePokesShow, setvilablePokesShow] = useState("avilable-hidden");
     const [currentState, setCurrentState] = useState(currentPlayer);
     const dispatch = useDispatch();
 
+    const handelAttack = () => {
+        setvilablePokesShow(avilablePokesShow === "avilable-show" ? "avilable-hidden" : "avilable-show");
+    }
+
     const haveAllHouses = () => {
         const housesSameColor = cards.reduce((sum, val) => {
-            if (typeof val==="object" &&val.pokemon.color === card.card.pokemon.color)
-                sum++;   
+            if (typeof val === "object" && val.pokemon.color === card.card.pokemon.color)
+                sum++;
             return sum
         }, 0)
-        if(housesSameColor===3) return true;
+        if (housesSameColor === 3) return true;
         return false;
     }
 
     const handelUpgrade = () => {
-        console.log(card, currentPlayer)
         if (currentPlayer.money >= card.card.pokemon.cost * 0.5) {
             const playersTemp = [...players];
             const currentPlayerTemp = { ...currentPlayer };
@@ -64,25 +69,27 @@ export default function Play({ card, currentPlayer, endTurn, setCards, turn, car
             </div>
         )
     }
-
+    
     if (typeof card.card === "object" && card.card.owner === currentPlayer.number && cards[card.pos].houses < 3 && haveAllHouses()) {
         return (
             <div className="flex column">
                 <Button onClick={() => setLand(land === "store" ? "none" : "store")}>Land details</Button>
                 <Button onClick={() => endTurn(false, currentState, turn)}>End Turn</Button>
-                <Button onClick={handelUpgrade} >Upgrade</Button>
+                {haveAllHouses ? <Button onClick={handelUpgrade} >Upgrade</Button> : null}
                 <LandDetails classToPut={land} pokemon={card.card.pokemon} />
             </div>
         )
     }
 
     if (typeof card.card === "object") {
-
+        { console.log(card) }
         return (
             <div className="flex column">
                 <Button onClick={() => setLand(land === "store" ? "none" : "store")}>Land details</Button>
+                {card.card.owner === null && currentPlayer.pokemons.length && currentPlayer.money >= card.card.pokemon.cost ? <Button onClick={() => handelAttack()}>Attack</Button> : null}
                 <Button onClick={() => endTurn(false, currentState, turn)}>End Turn</Button>
                 <LandDetails classToPut={land} pokemon={card.card.pokemon} />
+                <AvliablePokemons turn={turn} card={card} cards={cards} setCards={setCards} endTurn={endTurn} setLand={setLand} pokemonProp={card.card.pokemon} setvilablePokesShow={setvilablePokesShow} currentPlayer={currentPlayer} avilablePokesShow={avilablePokesShow} />
             </div>
         )
     }

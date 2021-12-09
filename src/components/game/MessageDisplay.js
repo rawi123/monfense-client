@@ -1,7 +1,6 @@
 import React from 'react'
 // import image from "../../sprites-animations"
 export default function MessageDisplay({ card, turn, currentPlayer }) {
-    
     if (card.card === "win" || card.card === "lost") {
         return (
             <div className={`${card ? "message-card" : "message-card-hide"}`}>
@@ -20,11 +19,11 @@ export default function MessageDisplay({ card, turn, currentPlayer }) {
         )
     }
 
-    if (typeof card.card === "object" && card.payToPlayer) {
+    if (typeof card.card === "object" && card.payToPlayer !== null) {
         return (
             <div className={`${card ? "message-card" : "message-card-hide"}`}>
                 <h2>
-                    {turn === currentPlayer.number ? "you paid rent to " : `player ${turn + 1} paid rent to`} {card.payToPlayer === currentPlayer.number ? "you " : card.payToPlayer ? `player ${turn + 1} ` : null} {card.moneyTakeOut}$
+                    {turn === currentPlayer.number ? "you paid rent to " : `player ${turn + 1} paid rent to`} {card.payToPlayer === currentPlayer.number ? "you " : card.payToPlayer !== null ? `player ${turn + 1} ` : null} {card.moneyTakeOut}$
                 </h2>
             </div>
         )

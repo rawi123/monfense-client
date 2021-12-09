@@ -10,12 +10,12 @@ import JailLand from './JailLand'
 import TaxPrize from './TaxPrize'
 
 
-export default function Board({ cards, setCards,haveToSell }) {
+export default function Board({ cards, setCards, haveToSell }) {
     const { pokemons } = useSelector(state => state?.pokemons);
     const dispatch = useDispatch();
 
-    const createPokemon = (number,owner=null,houses=null) => {
-        return { pokemon: pokemons[number], owner, houses: houses||2 };
+    const createPokemon = (number, owner = null, houses = 0) => {
+        return { pokemon: pokemons[number], owner, houses: houses };
     }
 
     useEffect(() => {
@@ -27,7 +27,7 @@ export default function Board({ cards, setCards,haveToSell }) {
         }
 
         else {
-            const arr = ["go", createPokemon(0), createPokemon(1), createPokemon(2), "tax", createPokemon(3), createPokemon(4), createPokemon(5), "prize", "card", "store", createPokemon(6), createPokemon(7), createPokemon(8), "prize", createPokemon(9), "tax", createPokemon(10), createPokemon(11), "card", "jail", createPokemon(12), createPokemon(13,0,1), createPokemon(14), "card", createPokemon(15), createPokemon(16), "tax", "card", createPokemon(17), "store", "tax", "prize", createPokemon(18), createPokemon(19), createPokemon(20), "card", createPokemon(21), createPokemon(22), createPokemon(23)];
+            const arr = ["go", createPokemon(0), createPokemon(1), createPokemon(2), "tax", createPokemon(3), createPokemon(4), createPokemon(5), "prize", "card", "store", createPokemon(6), createPokemon(7), createPokemon(8), "prize", createPokemon(9), "tax", createPokemon(10), createPokemon(11), "card", "jail", createPokemon(12), createPokemon(13), createPokemon(14), "card", createPokemon(15), createPokemon(16), "tax", "card", createPokemon(17), "store", "tax", "prize", createPokemon(18), createPokemon(19), createPokemon(20), "card", createPokemon(21), createPokemon(22), createPokemon(23)];
             setCards(arr);
         }// eslint-disable-next-line
     }, [pokemons])
@@ -38,7 +38,7 @@ export default function Board({ cards, setCards,haveToSell }) {
 
             {pokemons ? [...Array(40)].map((val, i) => {
                 if (typeof cards[i] === "object") {
-                    return <Land key={i} haveToSell={haveToSell} classGive={`land${i + 1}`} cardNumber={i}  children={<PokemonLand cardNumber={i} setCards={setCards} cards={cards} haveToSell={haveToSell} card={cards[i]} />} />
+                    return <Land key={i} haveToSell={haveToSell} classGive={`land${i + 1}`} cardNumber={i} children={<PokemonLand cardNumber={i} setCards={setCards} cards={cards} haveToSell={haveToSell} card={cards[i]} />} />
                 }
                 if (cards[i] === "tax" || cards[i] === "prize") {
                     return <Land key={i} haveToSell={haveToSell} classGive={`land${i + 1}`} cardNumber={i} children={<TaxPrize card={cards[i]} />} />
@@ -47,7 +47,7 @@ export default function Board({ cards, setCards,haveToSell }) {
                     return <Land key={i} haveToSell={haveToSell} classGive={`land${i + 1}`} cardNumber={i} children={<StoreLand card={cards[i]} />} />
                 }
                 if (cards[i] === "card") {
-                    return <Land key={i} haveToSell={haveToSell} classGive={`land${i + 1}`} cardNumber={i} children={<LuckyLand  />} />
+                    return <Land key={i} haveToSell={haveToSell} classGive={`land${i + 1}`} cardNumber={i} children={<LuckyLand />} />
                 }
                 return <Land key={i} haveToSell={haveToSell} classGive={`land${i + 1}`} cardNumber={i} children={<JailLand card={cards[i]} />} />
             }) : null}
