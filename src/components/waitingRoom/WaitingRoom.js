@@ -66,7 +66,7 @@ export default function WaitingRoom() {
             dispatch(addAction("play-game"));
             socket.on("play-game", (roomData) => {
                 roomData.map((val, i) => {
-                    const player = { number: i, img: images[i], pos: 0, socketId: val, pokemons: [], ownedLands: [], money: 0, jail: false };
+                    const player = { number: i, img: images[i], pos: 0, socketId: val, pokemons: [], ownedLands: [], money: 10000, jail: false };
                     if (socket.id === val) {
                         player.pokemons = user.pokemons;
                         dispatch(setCurrentPlayer({ currentPlayer: player }));

@@ -1,7 +1,7 @@
 import React from 'react'
 // import image from "../../sprites-animations"
 export default function MessageDisplay({ card, turn, currentPlayer }) {
-    console.log(card.card);
+    
     if (card.card === "win" || card.card === "lost") {
         return (
             <div className={`${card ? "message-card" : "message-card-hide"}`}>

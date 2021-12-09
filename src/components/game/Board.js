@@ -15,7 +15,7 @@ export default function Board({ cards, setCards,haveToSell }) {
     const dispatch = useDispatch();
 
     const createPokemon = (number,owner=null,houses=null) => {
-        return { pokemon: pokemons[number], owner:owner===null?1:owner, houses: houses||3 };
+        return { pokemon: pokemons[number], owner, houses: houses||2 };
     }
 
     useEffect(() => {

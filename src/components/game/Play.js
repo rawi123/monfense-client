@@ -6,17 +6,25 @@ import { setCurrentPlayer } from '../../redux/slices/currentPlayerSlices';
 import LandDetails from './LandDetails';
 import { setPlayers } from '../../redux/slices/playersSlices';
 
-export default function Play({ card, currentPlayer, endTurn,setCards, turn, cards }) {
+export default function Play({ card, currentPlayer, endTurn, setCards, turn, cards }) {
     const { players } = useSelector(state => state.players);
     const [store, setStore] = useState("store");
     const [land, setLand] = useState("");
     const [currentState, setCurrentState] = useState(currentPlayer);
     const dispatch = useDispatch();
 
-    console.log(cards);
+    const haveAllHouses = () => {
+        const housesSameColor = cards.reduce((sum, val) => {
+            if (typeof val==="object" &&val.pokemon.color === card.card.pokemon.color)
+                sum++;   
+            return sum
+        }, 0)
+        if(housesSameColor===3) return true;
+        return false;
+    }
 
     const handelUpgrade = () => {
-        console.log(card,currentPlayer)
+        console.log(card, currentPlayer)
         if (currentPlayer.money >= card.card.pokemon.cost * 0.5) {
             const playersTemp = [...players];
             const currentPlayerTemp = { ...currentPlayer };
@@ -57,7 +65,7 @@ export default function Play({ card, currentPlayer, endTurn,setCards, turn, card
         )
     }
 
-    if (typeof card.card === "object" && card.card.owner === currentPlayer.number && cards[card.pos].houses < 3) {
+    if (typeof card.card === "object" && card.card.owner === currentPlayer.number && cards[card.pos].houses < 3 && haveAllHouses()) {
         return (
             <div className="flex column">
                 <Button onClick={() => setLand(land === "store" ? "none" : "store")}>Land details</Button>

@@ -208,7 +208,6 @@ export const sellPlayerHouses = (cards,players, currentPlayer) => {
 
 export const checkWin=(players,turn,currentPlayer,setCurrentCard)=>{
     if(players.length===1 && currentPlayer.number===turn){
-
         return true;
     }
     return false;

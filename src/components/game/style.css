@@ -142,18 +142,7 @@
 .player2{left:50%;top:35%}
 .player3{left:70%;top:45%}
 
-.player-card-no-hover{
-    position: absolute;
-    height: 30vh;
-    background: black;
-    min-width: 250px;
-    width: 18vw;
-    transform: translateX(0) !important;
-    background: url("../../images/background.jpg") no-repeat left center/cover !important;
 
-    transition: all .3s ease;
-    overflow: hidden;
-}
 
 .player-card{
     position: absolute;
@@ -178,6 +167,19 @@
 .player-card1{left: 0;top: 50vh;transform: translateX(-95%);}
 .player-card2{right: 0;top: 10vh;transform: translateX(95%);}
 .player-card3{right: 0;top: 50vh;transform: translateX(95%);}
+
+.player-card-backwards{
+    position: absolute;
+    height: 30vh;
+    background: black;
+    min-width: 250px;
+    width: 18vw;
+    transform: translateX(0);
+    background: url("../../images/background.jpg") no-repeat left center/cover !important;
+    transition: all .3s ease;
+    overflow: hidden;
+}
+
 
 .message-card{
     position: absolute;

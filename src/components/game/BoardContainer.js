@@ -16,7 +16,6 @@ import MessageDisplay from './MessageDisplay';
 import Play from './Play';
 import { lostGame, winGame } from '../../api/userApi';
 import { setUser } from '../../redux/slices/userSlices';
-import { setSocketEnabled } from "../../redux/slices/socketRunSlices";
 
 export default function BoardContainer() {
     const navigate = useNavigate(),
@@ -38,20 +37,19 @@ export default function BoardContainer() {
         dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(setTurn(0));
-        setCurrentCard({ card: "", sum: "", rnd: "" });
         if (currentPlayer && 0 === currentPlayer.number) setEnableDice(true);
+
         socket.emit("socket-room", room => {
             if (room[0].slice(0, 4) !== "room") {
                 navigate("/game")
             }
         })
-        return (() => {
-            socket.emit("socket-room", room => {
-                socket.emit("leave-room", room);
-                window.location.reload(false);
-            })
-        })
+        // return (() => {
+        //     socket.emit("socket-room", room => {
+        //         socket.emit("leave-room", room);
+        //         window.location.reload(false);
+        //     })
+        // })
         // eslint-disable-next-line
     }, [])
 
@@ -79,8 +77,10 @@ export default function BoardContainer() {
                 if (checkWin(players, turn, currentPlayer, setCurrentCard)) {
                     setCurrentCard({ card: "win" })
                     await wait(3000);
-                    const data = await winGame(user);
-                    dispatch(setUser({ user: data }));
+                    if (user.username !== "guest") {
+                        const data = await winGame(user);
+                        dispatch(setUser({ user: data }));
+                    }
                     navigate("/game");
                 }
 
@@ -104,8 +104,7 @@ export default function BoardContainer() {
                 dispatch(setPlayers({ players }))
             })
             dispatch(addActions(["next-turn", "player-move"]))
-        }// eslint-disable-next-line
-
+        }
         // eslint-disable-next-line
     }, [actions, cards])
 
@@ -178,10 +177,16 @@ export default function BoardContainer() {
 
             setCurrentPlayer({ currentPlayer: null });
             setCurrentCard({ card: "lost" });
-            
+
+            if (user.username !== "guest") {
+                const data = await lostGame(user);
+                dispatch(setUser({ user: data }));
+            }
             await wait(3000);
 
+
             navigate("/game");
+
 
             endTurn(playersTemp, false, turn, false, false, cardsTemp);
         }
@@ -205,7 +210,10 @@ export default function BoardContainer() {
     }
 
     const handelPayAfterSell = (updatedPlayers = false, newPlayers = false, turn = false) => {
+
         if (newPlayers || currentCard.moneyTakeOut <= currentPlayer.money) {
+            console.log("paying",updatedPlayers)
+            console.log(newPlayers || players, newPlayers[turn] || currentPlayer, updatedPlayers || currentCard)
             const { playersTemp, currentPlayerTemp } = pay(newPlayers || players, newPlayers[turn] || currentPlayer, updatedPlayers || currentCard);
 
             if (!updatedPlayers) {
@@ -234,7 +242,7 @@ export default function BoardContainer() {
                 </div>
                 {enablePlay && currentPlayer.number === turn ? <Play setCards={setCards} cards={cards} endTurn={endTurn} turn={turn} currentPlayer={currentPlayer} card={currentCard}></Play> : null}
                 {roll.length ? <Alert sx={{ marginTop: "1rem" }} variant="outlined" severity="success" color="info" icon={false}>player rolled :{roll[0]},{roll[1]}</Alert> : null}
-                {haveToSell ? <Button onClick={handelPayAfterSell}>pay</Button> : null}
+                {haveToSell ? <Button onClick={()=>handelPayAfterSell()}>pay</Button> : null}
             </div>
 
             <PlayersCards turn={turn} haveToSell={haveToSell} currentPlayer={currentPlayer} players={players}></PlayersCards>
