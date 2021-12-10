@@ -1,13 +1,12 @@
-
-.board-global-container{
+.board-global-container {
     width: 100vw;
     height: 100vh;
     overflow-x: hidden !important;
-    background:url("../../images/board-background.jpg")no-repeat center center/cover ;
+    background: url("../../images/board-background.jpg")no-repeat center center/cover;
     position: relative;
 }
 
-.board-container{
+.board-container {
     width: 100vmin;
     height: 100vmin;
     position: relative;
@@ -23,13 +22,13 @@
     grid-row-gap: 3px;
     background: url("../../images/boardbackground.jpg")no-repeat center center/cover;
 
-    }
+}
 
-.land{
-    background: white; 
+.land {
+    background: white;
     text-align: center;
     height: 100%;
-    width: 100% ;
+    width: 100%;
     min-height: calc(100vmin / 13);
     min-width: calc(100vmin / 13);
     justify-content: center;
@@ -39,112 +38,255 @@
     overflow: hidden;
     position: relative;
 }
-.land>div{
-    width: 100% ;
+
+.land>div {
+    width: 100%;
 }
 
-.hotel{
+.hotel {
     width: 35%;
 }
-.top-bottom-hotel{
+
+.top-bottom-hotel {
     width: 70%;
 }
-.house{
+
+.house {
     width: 20%;
 }
-.top-bottom-house{
+
+.top-bottom-house {
     width: 33%;
 }
-.black-screen{
-    background:black;
+
+.black-screen {
+    background: black;
     position: absolute;
     height: 100%;
     width: 100%;
     opacity: 0.82;
     z-index: 3;
 }
-    
-.land1 { grid-area: 12 / 12 / 14 / 14; }
-.land2 { grid-area: 11 / 12 / 12 / 14; }
-.land3 { grid-area: 10 / 12 / 11 / 14; }
-.land4 { grid-area: 9 / 12 / 10 / 14; }
-.land5 { grid-area: 8 / 12 / 9 / 14; }
-.land6 { grid-area: 7 / 12 / 8 / 14; }
-.land7 { grid-area: 6 / 12 / 7 / 14; }
-.land8 { grid-area: 5 / 12 / 6 / 14; }
-.land9 { grid-area: 4 / 12 / 5 / 14; }
-.land10 { grid-area: 3 / 12 / 4 / 14; }
-.land11 { grid-area: 1 / 12 / 3 / 14; }
-.land12 { grid-area: 1 / 11 / 3 / 12; }
-.land13 { grid-area: 1 / 10 / 3 / 11; }
-.land14 { grid-area: 1 / 9 / 3 / 10; }
-.land15 { grid-area: 1 / 8 / 3 / 9; }
-.land16 { grid-area: 1 / 7 / 3 / 8; }
-.land17 { grid-area: 1 / 6 / 3 / 7; }
-.land18 { grid-area: 1 / 5 / 3 / 6; }
-.land19 { grid-area: 1 / 4 / 3 / 5; }
-.land20 { grid-area: 1 / 3 / 3 / 4; }
-.land21 { grid-area: 1 / 1 / 3 / 3; }
-.land22 { grid-area: 3 / 1 / 4 / 3; }
-.land23 { grid-area: 4 / 1 / 5 / 3; }
-.land24 { grid-area: 5 / 1 / 6 / 3; }
-.land25 { grid-area: 6 / 1 / 7 / 3; }
-.land26 { grid-area: 7 / 1 / 8 / 3; }
-.land27 { grid-area: 8 / 1 / 9 / 3; }
-.land28 { grid-area: 9 / 1 / 10 / 3; }
-.land29 { grid-area: 10 / 1 / 11 / 3; }
-.land30 { grid-area: 11 / 1 / 12 / 3; }
-.land31 { grid-area: 12 / 1 / 14 / 3; }
-.land32 { grid-area: 12 / 3 / 14 / 4; }
-.land33 { grid-area: 12 / 4 / 14 / 5; }
-.land34 { grid-area: 12 / 5 / 14 / 6; }
-.land35 { grid-area: 12 / 6 / 14 / 7; }
-.land36 { grid-area: 12 / 7 / 14 / 8; }
-.land37 { grid-area: 12 / 8 / 14 / 9; }
-.land38 { grid-area: 12 / 9 / 14 / 10; }
-.land39 { grid-area: 12 / 10 / 14 / 11; }
-.land40 { grid-area: 12 / 11 / 14 / 12; }
 
-.poke-card{
+.land1 {
+    grid-area: 12 / 12 / 14 / 14;
+}
+
+.land2 {
+    grid-area: 11 / 12 / 12 / 14;
+}
+
+.land3 {
+    grid-area: 10 / 12 / 11 / 14;
+}
+
+.land4 {
+    grid-area: 9 / 12 / 10 / 14;
+}
+
+.land5 {
+    grid-area: 8 / 12 / 9 / 14;
+}
+
+.land6 {
+    grid-area: 7 / 12 / 8 / 14;
+}
+
+.land7 {
+    grid-area: 6 / 12 / 7 / 14;
+}
+
+.land8 {
+    grid-area: 5 / 12 / 6 / 14;
+}
+
+.land9 {
+    grid-area: 4 / 12 / 5 / 14;
+}
+
+.land10 {
+    grid-area: 3 / 12 / 4 / 14;
+}
+
+.land11 {
+    grid-area: 1 / 12 / 3 / 14;
+}
+
+.land12 {
+    grid-area: 1 / 11 / 3 / 12;
+}
+
+.land13 {
+    grid-area: 1 / 10 / 3 / 11;
+}
+
+.land14 {
+    grid-area: 1 / 9 / 3 / 10;
+}
+
+.land15 {
+    grid-area: 1 / 8 / 3 / 9;
+}
+
+.land16 {
+    grid-area: 1 / 7 / 3 / 8;
+}
+
+.land17 {
+    grid-area: 1 / 6 / 3 / 7;
+}
+
+.land18 {
+    grid-area: 1 / 5 / 3 / 6;
+}
+
+.land19 {
+    grid-area: 1 / 4 / 3 / 5;
+}
+
+.land20 {
+    grid-area: 1 / 3 / 3 / 4;
+}
+
+.land21 {
+    grid-area: 1 / 1 / 3 / 3;
+}
+
+.land22 {
+    grid-area: 3 / 1 / 4 / 3;
+}
+
+.land23 {
+    grid-area: 4 / 1 / 5 / 3;
+}
+
+.land24 {
+    grid-area: 5 / 1 / 6 / 3;
+}
+
+.land25 {
+    grid-area: 6 / 1 / 7 / 3;
+}
+
+.land26 {
+    grid-area: 7 / 1 / 8 / 3;
+}
+
+.land27 {
+    grid-area: 8 / 1 / 9 / 3;
+}
+
+.land28 {
+    grid-area: 9 / 1 / 10 / 3;
+}
+
+.land29 {
+    grid-area: 10 / 1 / 11 / 3;
+}
+
+.land30 {
+    grid-area: 11 / 1 / 12 / 3;
+}
+
+.land31 {
+    grid-area: 12 / 1 / 14 / 3;
+}
+
+.land32 {
+    grid-area: 12 / 3 / 14 / 4;
+}
+
+.land33 {
+    grid-area: 12 / 4 / 14 / 5;
+}
+
+.land34 {
+    grid-area: 12 / 5 / 14 / 6;
+}
+
+.land35 {
+    grid-area: 12 / 6 / 14 / 7;
+}
+
+.land36 {
+    grid-area: 12 / 7 / 14 / 8;
+}
+
+.land37 {
+    grid-area: 12 / 8 / 14 / 9;
+}
+
+.land38 {
+    grid-area: 12 / 9 / 14 / 10;
+}
+
+.land39 {
+    grid-area: 12 / 10 / 14 / 11;
+}
+
+.land40 {
+    grid-area: 12 / 11 / 14 / 12;
+}
+
+.poke-card {
     background: white;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 100% ;
+    height: 100%;
     position: relative;
 }
-.enable-sell{
+
+.enable-sell {
     z-index: 10;
     cursor: pointer;
 }
 
-.player{
+.player {
     position: absolute;
     width: 25%;
     height: 25%;
 }
 
-.rotate270{
-    transform:rotate(270deg);
+.rotate270 {
+    transform: rotate(270deg);
 
 }
-.rotate90{
-    transform:rotate(90deg);
+
+.rotate90 {
+    transform: rotate(90deg);
     justify-self: flex-start;
 }
-.soldier{
+
+.soldier {
     width: 25px;
     position: absolute;
     border-radius: 7px;
 }
-.player0{left:10%;top:15%}
-.player1{left:30%;top:25%}
-.player2{left:50%;top:35%}
-.player3{left:70%;top:45%}
+
+.player0 {
+    left: 10%;
+    top: 15%
+}
+
+.player1 {
+    left: 30%;
+    top: 25%
+}
+
+.player2 {
+    left: 50%;
+    top: 35%
+}
+
+.player3 {
+    left: 70%;
+    top: 45%
+}
 
 
 
-.player-card{
+.player-card {
     position: absolute;
     height: 30vh;
     background: black;
@@ -155,7 +297,7 @@
     overflow: hidden;
 }
 
-.player-card:hover{
+.player-card:hover {
     transform: translateX(0);
     /* background: white !important; */
     background: url("../../images/background.jpg") no-repeat left center/cover !important;
@@ -163,12 +305,31 @@
 }
 
 
-.player-card0{left: 0;top: 10vh;transform: translateX(-95%);}
-.player-card1{left: 0;top: 50vh;transform: translateX(-95%);}
-.player-card2{right: 0;top: 10vh;transform: translateX(95%);}
-.player-card3{right: 0;top: 50vh;transform: translateX(95%);}
+.player-card0 {
+    left: 0;
+    top: 10vh;
+    transform: translateX(-95%);
+}
 
-.player-card-backwards{
+.player-card1 {
+    left: 0;
+    top: 50vh;
+    transform: translateX(-95%);
+}
+
+.player-card2 {
+    right: 0;
+    top: 10vh;
+    transform: translateX(95%);
+}
+
+.player-card3 {
+    right: 0;
+    top: 50vh;
+    transform: translateX(95%);
+}
+
+.player-card-backwards {
     position: absolute;
     height: 30vh;
     background: black;
@@ -183,7 +344,7 @@
 
 
 
-.message-card{
+.message-card {
     position: absolute;
     top: 40%;
     left: 30%;
@@ -191,28 +352,31 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    border:2px solid black;
+    border: 2px solid black;
     border-radius: 10px;
     background: url("../../images/background.jpg") no-repeat center center/cover;
-    height: 200px ;
-    width: 340px ;
+    height: 200px;
+    width: 340px;
     text-align: center;
-    animation:messageDisplay 1.5s ease-in-out forwards ;
+    animation: messageDisplay 1.5s ease-in-out forwards;
     padding: .5rem;
 }
-.background-no-fill{
-    background: url("../../images/background.jpg") ;
+
+.background-no-fill {
+    background: url("../../images/background.jpg");
 
 }
-.message-card-hide{
-    animation:messageHide 1.5s ease-in-out forwards ;
+
+.message-card-hide {
+    animation: messageHide 1.5s ease-in-out forwards;
 }
-.pepe-sad{
+
+.pepe-sad {
     background: url(../../images/pepe\ the\ frog\ broke.jpg) no-repeat center center/cover;
-    
+
 }
 
-.land-details{
+.land-details {
     position: absolute;
     /* margin: 0 auto; */
     left: calc(50% - 200px);
@@ -224,64 +388,78 @@
     border: none;
     min-width: 200px;
     min-height: 200px;
-    
+
 }
-.land-purple{
-    background: linear-gradient(90deg,rgb(156, 85, 156),rgb(56, 25, 78) ) !important;
+
+.land-purple {
+    background: linear-gradient(90deg, rgb(156, 85, 156), rgb(56, 25, 78)) !important;
 }
-.land-teal{
-    background: linear-gradient(90deg,teal,rgb(50, 107, 107) ) !important;
+
+.land-teal {
+    background: linear-gradient(90deg, teal, rgb(50, 107, 107)) !important;
 }
-.land-pink{
-    background: linear-gradient(125deg,pink,rgb(180, 30, 80) ) !important;
+
+.land-pink {
+    background: linear-gradient(125deg, pink, rgb(180, 30, 80)) !important;
 }
-.land-green{
-    background: linear-gradient(125deg,rgb(52, 199, 52),rgb(40, 110, 82) ) !important;
+
+.land-green {
+    background: linear-gradient(125deg, rgb(52, 199, 52), rgb(40, 110, 82)) !important;
 }
-.land-gray{
-    background: linear-gradient(125deg,gray,rgb(46, 168, 187) ) !important;
+
+.land-gray {
+    background: linear-gradient(125deg, gray, rgb(46, 168, 187)) !important;
 }
-.land-blue{
-    background: linear-gradient(125deg,blue,cyan ) !important;
+
+.land-blue {
+    background: linear-gradient(125deg, blue, cyan) !important;
 }
-.land-yellow strong{
+
+.land-yellow strong {
     color: black;
     text-shadow: none;
 }
-strong{
+
+strong {
     text-shadow: black 2px 2px;
 }
 
-.land-red{
-    background: linear-gradient(125deg,rgb(255, 0, 0),rgb(204, 132, 114) ) !important;
-}
-.land-yellow{
-    background: linear-gradient(125deg,yellow,goldenrod ) !important;
+.land-red {
+    background: linear-gradient(125deg, rgb(255, 0, 0), rgb(204, 132, 114)) !important;
 }
 
-.pikachu{
+.land-yellow {
+    background: linear-gradient(125deg, yellow, goldenrod) !important;
+}
+
+.pikachu {
     outline: none;
     border: 5px solid transparent;
     border-image: linear-gradient(to bottom right, #b827fc 0%, #2c90fc 25%, #b8fd33 50%, #fec837 75%, #fd1892 100%);
     border-image-slice: 1;
 }
-.avilable-hidden{
+
+.avilable-hidden {
     position: absolute;
-    bottom:0;
+    bottom: 0;
     left: 30vw;
-    overflow:auto;
+    overflow-x: scroll;
     overflow-y: hidden;
     transition: all .4s;
-    width: 60vw;
+    max-width: 60vw;
+    white-space: nowrap;
 }
 
+.avilable-hidden::-webkit-scrollbar {
+    height: 10px;
+}
 
-.pokemon-attack{
+.pokemon-attack {
     height: 80px;
     cursor: pointer;
 }
 
-.pokemon-fight{
+.pokemon-fight {
     width: 100%;
     height: 100%;
     background: url("../../images/fight-background.png")no-repeat center center/cover;
@@ -291,37 +469,41 @@ strong{
     animation: start-fight .8s ease-in-out forwards;
 }
 
-.my-pokemon-fight{
+.my-pokemon-fight {
     position: absolute;
     right: 50%;
     bottom: 22%;
     height: 45%;
-    animation :my-pokemon-appear 1.4s ease-in-out forwards;
+    animation: my-pokemon-appear 1.4s ease-in-out forwards;
 }
+
 .my-pokemon-fight>div,
-.enemy-pokemon-fight>img{
+.enemy-pokemon-fight>img {
     height: 100%;
 }
 
-.enemy-pokemon-fight{
+.enemy-pokemon-fight {
     position: absolute;
     height: 25%;
     right: 20%;
     top: 15%;
-    animation :pokemon-appear 1.4s ease-in-out forwards;
+    animation: pokemon-appear 1.4s ease-in-out forwards;
 }
-.pokemon-hp{
+
+.pokemon-hp {
     color: yellow;
     background: gray;
     display: inline;
     padding: .4rem;
     border-radius: 10px;
 }
-.heal{
+
+.heal {
     position: absolute;
     animation: fadeOut 1.6s ease-in-out forwards;
 }
-.damage-div{
+
+.damage-div {
     position: absolute;
     width: 20%;
     height: 10%;
@@ -336,195 +518,283 @@ strong{
 
 
 
-.damage{
+.damage {
     color: white;
     font-size: 1.2rem;
 }
 
-.attack-animation{
+.attack-animation {
     animation: attack-animation .6s ease;
 }
-.super-attack-animation{
-    animation: super-attack-animation .6s ease;
-}
-@keyframes super-attack-animation {
-    0%{
-        transform: translateX(40px) scale(0.2);  
-        }
-        20%{
-        transform: translateX(-40px) scale(1.2);  
-        }
-        40%{
-        transform: translateX(30px) scale(0.9);  
-        }
-        6%{
-        transform: translateX(30px) scale(1.1);  
-        }
-        80%{
-        transform: translateX(150px) scale(0);  
-        }
-        1000%{
-        transform: translateX(0px);  
-        }
+
+
+
+
+
+.super-attack-animation-on-me {
+    position: absolute;
+    overflow: hidden;
+    height: 25%;
+    right: 20%;
+    top: 15%;
+    width: 100%;
+    height: 100%;
+
+
 }
 
+.super-attack-animation-on-enemy {
+    position: absolute;
+    overflow: hidden;
+    height: 100%;
+    right: 20%;
+    top: 15%;
+    width: 100%;
+}
+
+.super-attack-animation-on-enemy img, .super-attack-animation-on-me img {
+    width: 100%;
+    height: 100%;
+    animation: super-attack-animation 1s ease;
+}
+
+@keyframes super-attack-animation {
+    0% {
+        transform: translateY(100%);
+    }
+
+    70% {
+        transform: translateY(-10%);
+    }
+
+    100% {
+        transform: translateY(-10%);
+    }
+}
+
+.pokemon-dead {
+    animation: die .8s ease forwards;
+}
+
+.small-alert {
+    position: absolute;
+    text-align: center;
+    left: 48%;
+    top: 48%;
+    color: red;
+    font-weight: 700;
+    animation: small-alert 1s ease-in-out forwards;
+    font-size: 3rem;
+}
+
+@keyframes small-alert {
+    0% {
+        transform: scale(0);
+    }
+
+    80% {
+        transform: scale(1.4);
+        opacity: 0.8;
+    }
+
+    100% {
+        transform: scale(1.5);
+        opacity: 0;
+    }
+}
+
+@keyframes die {
+    20% {
+        transform: scale(1.4);
+    }
+
+    100% {
+        transform: scale(0);
+    }
+}
+
+
 @keyframes attack-animation {
-    0%{
-    transform: translateX(30px);  
+    0% {
+        transform: translateX(30px);
     }
-    20%{
-    transform: translateX(-30px);  
+
+    20% {
+        transform: translateX(-30px);
     }
-    40%{
-    transform: translateX(20px);  
+
+    40% {
+        transform: translateX(20px);
     }
-    6%{
-    transform: translateX(20px);  
+
+    6% {
+        transform: translateX(20px);
     }
-    80%{
-    transform: translateX(10px);  
+
+    80% {
+        transform: translateX(10px);
     }
-    1000%{
-    transform: translateX(0px);  
+
+    1000% {
+        transform: translateX(0px);
     }
 }
 
 @keyframes fadeOut {
-    0%{
+    0% {
         opacity: .3;
     }
-    30%{
+
+    30% {
         opacity: 1;
     }
-    80%{opacity: 1;}
-    100%{
+
+    80% {
+        opacity: 1;
+    }
+
+    100% {
         opacity: .3;
     }
 
 }
+
 @keyframes my-pokemon-appear {
-    0%{
+    0% {
         transform: translateX(100vw);
-    }    
-    40%{
+    }
+
+    40% {
         transform: translateX(100vw);
-    }    
-    100%{
+    }
+
+    100% {
         transform: translateX(0%);
 
     }
 }
+
 @keyframes pokemon-appear {
-    0%{
+    0% {
         transform: translateX(-100vw);
-    }    
-    100%{
+    }
+
+    100% {
         transform: translateX(0%);
 
     }
 }
 
 @keyframes start-fight {
-    0%{
+    0% {
         transform: scale(0);
     }
-    100%{
+
+    100% {
         transform: scale(1);
-    }   
+    }
 }
 
 
 @keyframes messageHide {
-    0%{
+    0% {
         transform: scale(1) rotate(720deg);
     }
 
-    99%{
-        transform:scale(0) rotate(0deg) ;
+    100% {
+        transform: scale(0) rotate(0deg);
     }
 }
 
 @keyframes messageDisplay {
-    0%{
+    0% {
         transform: scale(0) rotate(0deg);
-    }    
+    }
 
-    99%{
-        transform:scale(1) rotate(720deg) ;
+    100% {
+        transform: scale(1) rotate(720deg);
     }
 
 }
 
 @media (max-width:1000px) {
-    .enemy-pokemon-fight{
+    .enemy-pokemon-fight {
         height: 25%;
         top: 15%;
         right: 10%;
     }
 }
+
 @media (max-width:800px) {
-    .land{
+    .land {
         font-size: .7rem;
     }
 }
 
 @media (min-width:1000px) {
-    .land{
+    .land {
         font-size: 1.1rem;
     }
 }
 
 @media (max-height:800px) {
-    .land{
+    .land {
         font-size: .8rem;
     }
 }
 
 @media (max-height:800px) {
-    .land{
+    .land {
         font-size: .8rem;
     }
 
 }
 
 @media (max-width:900px) {
-    .board-container,.board{
+    .board-container, .board {
         width: 90vmin;
         height: 100vh;
         /* overflow: hidden; */
         margin-right: 1rem;
     }
-    .land{
+
+    .land {
         font-size: .7rem;
     }
 }
+
 @media (max-width:1100px) {
-    .board-container,.board{
+    .board-container, .board {
         width: 90vmin;
         height: 100vh;
         /* overflow: hidden; */
         margin-right: 1rem;
     }
-    .land{
+
+    .land {
         font-size: .7rem;
     }
-    .soldier{
+
+    .soldier {
         width: 15px;
     }
 }
 
 @media (max-height:560px) {
-    .land{
+    .land {
         font-size: .5rem;
     }
-    .soldier{
+
+    .soldier {
         width: 15px;
     }
-    .enemy-pokemon-fight{
+
+    .enemy-pokemon-fight {
         top: 3%;
         right: 15%;
     }
-    .my-pokemon-fight{
+
+    .my-pokemon-fight {
         right: 50%;
     }
 }

@@ -59,7 +59,7 @@ export default function Play({ card, currentPlayer, endTurn, setCards, turn, car
         }
     }
 
-
+    console.log(card.card)
     if (card.card === "store") {
         return (
             <div className="flex column">
@@ -82,14 +82,14 @@ export default function Play({ card, currentPlayer, endTurn, setCards, turn, car
     }
 
     if (typeof card.card === "object") {
-        { console.log(card) }
+
         return (
             <div className="flex column">
                 <Button onClick={() => setLand(land === "store" ? "none" : "store")}>Land details</Button>
                 {card.card.owner === null && currentPlayer.pokemons.length && currentPlayer.money >= card.card.pokemon.cost ? <Button onClick={() => handelAttack()}>Attack</Button> : null}
                 <Button onClick={() => endTurn(false, currentState, turn)}>End Turn</Button>
                 <LandDetails classToPut={land} pokemon={card.card.pokemon} />
-                <AvliablePokemons turn={turn} card={card} cards={cards} setCards={setCards} endTurn={endTurn} setLand={setLand} pokemonProp={card.card.pokemon} setvilablePokesShow={setvilablePokesShow} currentPlayer={currentPlayer} avilablePokesShow={avilablePokesShow} />
+                <AvliablePokemons setLand={setLand} pokemonProp={card.card.pokemon} setvilablePokesShow={setvilablePokesShow} currentPlayer={currentPlayer} avilablePokesShow={avilablePokesShow} />
             </div>
         )
     }

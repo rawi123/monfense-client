@@ -189,25 +189,25 @@ export const pay = (players, currentPlayer, currentCard) => {
 }
 
 
-export const sellPlayerHouses = (cards,players, currentPlayer) => {
+export const sellPlayerHouses = (cards, players, currentPlayer) => {
     const currentPlayerTemp = { ...currentPlayer };
 
     const cardsTemp = cards.map(card => {
         if (typeof card === "object" && card.owner === currentPlayer.number) {
             card.owner = null;
             currentPlayerTemp.money = parseInt(card.pokemon.cost * 0.5) * card.houses;
-            card.houses=0;
+            card.houses = 0;
         }
         return card;
     })
 
-    players[currentPlayer.number]=currentPlayerTemp;
-    return {cardsTemp,playersTempAfterSell:players,currentPlayerTemp};
+    players[currentPlayer.number] = currentPlayerTemp;
+    return { cardsTemp, playersTempAfterSell: players, currentPlayerTemp };
 }
 
 
-export const checkWin=(players,turn,currentPlayer,setCurrentCard)=>{
-    if(players.length===1 && currentPlayer.number===turn){
+export const checkWin = (players, turn, currentPlayer) => {
+    if (players.length === 1 && currentPlayer.number === turn) {
         return true;
     }
     return false;

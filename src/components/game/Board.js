@@ -14,7 +14,7 @@ export default function Board({ cards, setCards, haveToSell }) {
     const { pokemons } = useSelector(state => state?.pokemons);
     const dispatch = useDispatch();
 
-    const createPokemon = (number, owner = null, houses = 0) => {
+    const createPokemon = (number, owner = null, houses = 0) => {//build a pokemon card
         return { pokemon: pokemons[number], owner, houses: houses };
     }
 
@@ -26,14 +26,14 @@ export default function Board({ cards, setCards, haveToSell }) {
             })()
         }
 
-        else {
+        else {//build all cards in array
             const arr = ["go", createPokemon(0), createPokemon(1), createPokemon(2), "tax", createPokemon(3), createPokemon(4), createPokemon(5), "prize", "card", "store", createPokemon(6), createPokemon(7), createPokemon(8), "prize", createPokemon(9), "tax", createPokemon(10), createPokemon(11), "card", "jail", createPokemon(12), createPokemon(13), createPokemon(14), "card", createPokemon(15), createPokemon(16), "tax", "card", createPokemon(17), "store", "tax", "prize", createPokemon(18), createPokemon(19), createPokemon(20), "card", createPokemon(21), createPokemon(22), createPokemon(23)];
             setCards(arr);
         }// eslint-disable-next-line
     }, [pokemons])
 
 
-    return (
+    return (//display each land by its type
         <div className="board">
 
             {pokemons ? [...Array(40)].map((val, i) => {

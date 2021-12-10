@@ -17,6 +17,7 @@ import { setCurrentPlayer } from "../../redux/slices/currentPlayerSlices"
 import { addPlayer } from "../../redux/slices/playersSlices";
 import { addAction } from '../../redux/slices/socketActionsSlices';
 import { setPlayers } from "../../redux/slices/playersSlices"
+import { setRoom } from "../../redux/slices/roomSlices"
 import Nav from "../Nav";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -46,12 +47,13 @@ export default function WaitingRoom() {
     const [tableClass, setTableClass] = React.useState("");
     const [currentRoom, setCurrentRoom] = React.useState("");
     const [images] = React.useState(['blue', 'yellow', 'red', 'green']);
+    const { pokemons } = useSelector(state => state.pokemons);
     const { user } = useSelector(state => state.user);
     const { actions } = useSelector(state => state.socketActions);
     const navigate = useNavigate();
 
     const dispatch = useDispatch();
-    React.useEffect(() => {
+    React.useEffect(() => {//update rooms
 
         socket.emit("get-rooms");
         socket.on("return-rooms", (rooms) => {
@@ -60,15 +62,19 @@ export default function WaitingRoom() {
 
     }, [])
 
-    React.useEffect(() => {
+    React.useEffect(() => {//play game set all players in redux state navigate to game and add the relevant pokemons
         dispatch(setPlayers({ players: [] }));
-        if (!actions.includes("play-game") && user) {
+        if (!actions.includes("play-game") && user && pokemons) {
             dispatch(addAction("play-game"));
-            socket.on("play-game", (roomData) => {
+            socket.on("play-game", (roomData, roomName) => {
+                dispatch(setRoom(roomName));
                 roomData.map((val, i) => {
-                    const player = { number: i, img: images[i], pos: 0, socketId: val, pokemons: [], ownedLands: [], money: 10000, jail: false };
+                    const player = { number: i, img: images[i], pos: 0, socketId: val, pokemons: [], ownedLands: [], money: 5000, jail: false };
                     if (socket.id === val) {
                         player.pokemons = user.pokemons;
+                        if (player.pokemons.length === 0) {
+                            player.pokemons = addRandomPokemon();
+                        }
                         dispatch(setCurrentPlayer({ currentPlayer: player }));
                     }
                     dispatch(addPlayer({ player }))
@@ -77,16 +83,21 @@ export default function WaitingRoom() {
                 navigate("/game-playing-online");
             })
         }// eslint-disable-next-line
-    }, [user])
+    }, [user, pokemons])
 
-    const createRoom = async () => {
+    const addRandomPokemon = () => {
+        const pokemonsUnder10k = pokemons.filter(pokemon => pokemon.cost < 10000);
+        return [pokemonsUnder10k[Math.floor(Math.random() * pokemonsUnder10k.length)]];
+    }
+
+    const createRoom = async () => {//create new room
         socket.emit("leave-last-room");
         socket.emit('create', (room) => {
             displayRoom(room);
         });
     }
 
-    const joinRoom = (roomNumber) => {
+    const joinRoom = (roomNumber) => {//join a room
         try {
             socket.emit("join-room", roomNumber, (room) => {
                 displayRoom(room);
@@ -98,7 +109,7 @@ export default function WaitingRoom() {
 
     }
 
-    const displayRoom = (roomNumber) => {
+    const displayRoom = (roomNumber) => {//display room - show the component
         setCurrentRoom(roomNumber);
         setTableClass("none-absoulute");
     }

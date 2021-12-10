@@ -15,6 +15,8 @@ import WaitingRoom from "./components/waitingRoom/WaitingRoom";
 import socket from "./api/socket";
 import BoardContainer from "./components/game/BoardContainer";
 import {setSocketEnabled} from "./redux/slices/socketRunSlices";
+import { getPokemons } from "./api/pokemonApi";
+import { setPokemons } from "./redux/slices/pokemonSlices";
 
 function App() {
   const dispatch = useDispatch();
@@ -25,7 +27,13 @@ function App() {
     })
     if (localStorage.getItem("token")) {
       dispatch(fetchUser())
-    }// eslint-disable-next-line
+    }
+    (async ()=>{
+      const pokemons = await getPokemons();
+      dispatch(setPokemons({ pokemons }))
+    })()
+
+    // eslint-disable-next-line
   }, [])
 
 

@@ -15,6 +15,7 @@ import { addAction } from '../../redux/slices/socketActionsSlices';
 export default function Room({ roomProp, setTableClass }) {
     const [room, setRoom] = useState(roomProp)
     const [messages, setMessages] = useState([]);
+    const [alert, setAlert] = useState(false);
     const [input, setInput] = useState("");
     const { user } = useSelector(state => state?.user);
     const { actions } = useSelector(state => state.socketActions);
@@ -54,8 +55,14 @@ export default function Room({ roomProp, setTableClass }) {
     }
 
     const startGame = () => {
-        // if (room[1].length >= 2)
-        socket.emit("start-game", room[0])
+        if (room[1].length >= 2)
+            socket.emit("start-game", room[0])
+
+        else setAlert(true);
+
+        setTimeout(() => {
+            setAlert(false);
+        }, 1000);
     }
 
     return (
@@ -78,7 +85,7 @@ export default function Room({ roomProp, setTableClass }) {
                                     </div>
                                     <span className="timestamp"><span className="username">{val.sender}</span>&bull;</span>
                                 </div>
-                                <img alt="person img" className="user-img" id="user-0" src="//gravatar.com/avatar/56234674574535734573000000000001?d=retro" />
+                                <img alt="person img" className="user-img" id="user-0" src={`${socket.id === val.socket ? "//gravatar.com/avatar/56234674574535734573000000000001?d=retro" : "//gravatar.com/avatar/00034587632094500000000000000000?d=retro"}`} />
                             </div>
                         </article>
                     </ListItem>)}
@@ -93,6 +100,7 @@ export default function Room({ roomProp, setTableClass }) {
                     </Grid>
                 </Grid>
             </Grid>
+            {alert ? <h2 className='small-alert' style={{ left: "30%" }}>Not enough players!</h2> : null}
             {socket.id === room[1][0] ? <Button onClick={startGame} variant="contained" style={{ background: "#000000", width: "100%", opacity: 0.9, color: "white" }}>Play</Button> : null}
 
         </>

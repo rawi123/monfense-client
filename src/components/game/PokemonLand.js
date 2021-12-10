@@ -17,7 +17,6 @@ export default function PokemonLand({ card, haveToSell, cards, setCards, cardNum
     const { players } = useSelector(state => state.players);
     const { turn } = useSelector(state => state.turn)
     const dispatch = useDispatch();
-
     const sellBuilding = () => {
         if (haveToSell && card.owner === currentPlayer?.number && turn === currentPlayer?.number) {
             const playersTemp = [...players];
@@ -41,15 +40,15 @@ export default function PokemonLand({ card, haveToSell, cards, setCards, cardNum
         }
     }
 
-    return (
+    return (//1-9 21-29
         <div className={`poke-card ${haveToSell && card.owner === currentPlayer?.number && turn === currentPlayer?.number ? "enable-sell" : null}`}
             onClick={() => sellBuilding()}>
             <p style={{ background: card.pokemon.color, width: "100%", color: card.pokemon.color === "blue" ? "white" : "black" }}>{card.pokemon.name}</p>
             <div className="flex center">
                 {card.owner !== null ? card.houses === 3 ?
-                    <img className={`hotel ${card.pokemon.color === "yellow" || card.pokemon.color === "purple" || card.pokemon.color === "green" || card.pokemon.color === "gray" ? "top-bottom-hotel" : null}`} alt="hotel" src={card.owner === 0 ? blueHotel : card.owner === 1 ? greenHotel : card.owner === 2 ? yellowHotel : redHotel}></img>
+                    <img className={`hotel ${(cardNumber >= 11 && card.number <= 19) || (card.number >= 31 && card.number <= 39) ? "top-bottom-hotel" : null}`} alt="hotel" src={card.owner === 0 ? blueHotel : card.owner === 1 ? greenHotel : card.owner === 2 ? yellowHotel : redHotel}></img>
                     : Array.from({ length: card.houses }).map((house, i) => {
-                        return <img key={i} className={`house ${card.pokemon.color === "yellow" || card.pokemon.color === "purple" || card.pokemon.color === "green" || card.pokemon.color === "gray" ? "top-bottom-house" : null}`} alt="house" src={card.owner === 0 ? blueHouse : card.owner === 1 ? greenHouse : card.owner === 2 ? yellowHouse : redHouse}></img>
+                        return <img key={i} className={`house ${(cardNumber >= 11 && card.number <= 19) || (card.number >= 31 && card.number <= 39) ? "top-bottom-house" : null}`} alt="house" src={card.owner === 0 ? blueHouse : card.owner === 1 ? greenHouse : card.owner === 2 ? yellowHouse : redHouse}></img>
                     }) : null}
             </div>
             <p>{card.pokemon.cost}$</p>

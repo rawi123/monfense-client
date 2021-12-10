@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setCurrentPlayer } from "../../redux/slices/currentPlayerSlices";
 import { setPlayers } from "../../redux/slices/playersSlices";
 import { setTurn } from '../../redux/slices/turnSlices';
-import { addActions } from "../../redux/slices/socketActionsSlices";
+import { addAction, addActions } from "../../redux/slices/socketActionsSlices";
 import PlayersCards from './PlayersCards';
 import { Alert, Button } from '@mui/material';
 import { wait, updatePlayerPos, playTurn, setFreeFromJail, nextTurn, pay, sellPlayerHouses, checkWin } from './boradFunctionality/boardFunctionality';
@@ -16,6 +16,8 @@ import MessageDisplay from './MessageDisplay';
 import Play from './Play';
 import { lostGame, winGame } from '../../api/userApi';
 import { setUser } from '../../redux/slices/userSlices';
+import PokemonFight from './PokemonFight';
+import { setFight, setFightPokemons } from '../../redux/slices/pokemonFightSlices';
 
 export default function BoardContainer() {
     const navigate = useNavigate(),
@@ -26,6 +28,8 @@ export default function BoardContainer() {
         { pokemons } = useSelector(state => state.pokemons),
         { actions } = useSelector(state => state.socketActions),
         { user } = useSelector(state => state.user),
+        { fight } = useSelector(state => state.pokemonFight),
+        pokemonsFight = useSelector(state => state.pokemonFight).pokemons,
         [roll, setRoll] = useState([]),
         [cards, setCards] = useState([]),
         [playerPlayingTurn, setPlayerPlayingTurn] = useState(),
@@ -44,13 +48,25 @@ export default function BoardContainer() {
                 navigate("/game")
             }
         })
-        // return (() => {
-        //     socket.emit("socket-room", room => {
-        //         socket.emit("leave-room", room);
-        //         window.location.reload(false);
-        //     })
-        // })
-        // eslint-disable-next-line
+        return (() => {
+
+            // socket.emit("socket-room", room => {
+            //     socket.emit("leave-room", room);
+            //     window.location.reload(false);
+            // })
+        })
+        //eslint-disable-next-line
+    }, [])
+
+    useEffect(() => {//start fight but cant play just watch
+        if (!actions.includes("fight-started")) {
+            socket.on("fight-started", (pokemonFight) => {
+                // setCurrentCard({ card: "" });
+                dispatch(setFightPokemons(pokemonFight));
+                dispatch(setFight("pokemon-fight"));
+            })
+            dispatch(addAction("fight-started"));
+        }// eslint-disable-next-line
     }, [])
 
     useEffect(() => {
@@ -70,12 +86,13 @@ export default function BoardContainer() {
                 walk(oldPos, sum, turn, players, updatedPlayers, diceArr, cardsProp);
             })
 
-            socket.on("next-turn", async (turn, players, cards) => {
+            socket.on("next-turn", async (turn, players, cards) => {//the function recived new turns updated players state and cards
+                //sets them and update them with current player, while checking win
 
                 const currentFind = players.find(val => val.number === currentPlayer.number)
                 dispatch(setCurrentPlayer({ currentPlayer: currentFind }))
                 setCurrentCard({ card: "" });
-                if (checkWin(players, turn, currentPlayer, setCurrentCard)) {
+                if (checkWin(players, turn, currentFind)) {
                     setCurrentCard({ card: "win" })
                     await wait(3000);
                     if (user.username !== "guest") {
@@ -89,12 +106,14 @@ export default function BoardContainer() {
                     if (cards.length)
                         setCards(cards)
 
-                    if (turn === currentPlayer.number) {
-                        if (currentPlayer.jail === true) {
-                            const jailFree = setFreeFromJail(players, currentPlayer);
+                    if (turn === currentFind.number) {
+                        if (currentFind.jail === true) {
+                            const jailFree = setFreeFromJail(players, currentFind);
                             dispatch(setCurrentPlayer({ currentPlayer: jailFree.player }))
-                            dispatch(setPlayers({ players: jailFree.allPlayers }));
-                            socket.emit("next-turn", turn, jailFree.allPlayers);
+                            dispatch(setPlayers({ players: jailFree.allPlayers }));//
+                            setCurrentCard({ card: "one round jail" });
+                            await wait(1300);
+                            socket.emit("next-turn", turn, jailFree.allPlayers, cards);
                         }
                         else setEnableDice(true);
                     }
@@ -112,6 +131,9 @@ export default function BoardContainer() {
 
 
     const rolledDice = async (sum, dicesArr) => {
+        if (!enableDice) {
+            return
+        }
         setEnableDice(false);
         setEnablePlay(false);
 
@@ -144,11 +166,11 @@ export default function BoardContainer() {
         else {
             setCurrentCard({ card: `lost`, player: `player ${turn + 1}` });
         }
-        console.log(updatedPlayers.payToPlayer);
+
         let timeOut;
 
         if (!updatedPlayers.haveToSell &&
-            ((typeof (updatedPlayers.card) !== "object" && updatedPlayers.card !== "store") || (typeof (updatedPlayers.card) === "object" && updatedPlayers.payToPlayer!==null)))
+            ((typeof (updatedPlayers.card) !== "object" && updatedPlayers.card !== "store") || (typeof (updatedPlayers.card) === "object" && updatedPlayers.payToPlayer !== null)))
             timeOut = setTimeout(() => {
                 setCurrentCard({ card: "" })
             }, 4000);
@@ -173,7 +195,7 @@ export default function BoardContainer() {
                 }
             }
         }
-        else if (currentPlayer.number === turn) {
+        else if (currentPlayer.number === turn) {//player lost
             const { cardsTemp, playersTempAfterSell, currentPlayerTemp } = sellPlayerHouses(cards, updatedPlayers.players, currentPlayer);
             updatedPlayers.moneyTakeOut = currentPlayerTemp.money;
 
@@ -189,11 +211,9 @@ export default function BoardContainer() {
             }
             await wait(3000);
 
-
+            endTurn(playersTemp, false, turn, false, false, cardsTemp);
             navigate("/game");
 
-
-            endTurn(playersTemp, false, turn, false, false, cardsTemp);
         }
         if (updatedPlayers.lost === true) {
             clearTimeout(timeOut);
@@ -241,13 +261,20 @@ export default function BoardContainer() {
                 <div className="flex column">
                     <Dice rolledDice={rolledDice} turn={turn} enableDice={enableDice} currentPlayerTurn={currentPlayer?.number}></Dice>
                 </div>
-                {enablePlay && currentPlayer.number === turn ? <Play setCards={setCards} cards={cards} endTurn={endTurn} turn={turn} currentPlayer={currentPlayer} card={currentCard}></Play> : null}
+                {(enablePlay && currentPlayer.number === turn) ? <Play setCards={setCards} cards={cards} endTurn={endTurn} turn={turn} currentPlayer={currentPlayer} card={currentCard}></Play> : null}
                 {roll.length ? <Alert sx={{ marginTop: "1rem" }} variant="outlined" severity="success" color="info" icon={false}>player rolled :{roll[0]},{roll[1]}</Alert> : null}
                 {haveToSell ? <Button onClick={() => handelPayAfterSell()}>pay</Button> : null}
             </div>
 
             <PlayersCards turn={turn} haveToSell={haveToSell} currentPlayer={currentPlayer} players={players}></PlayersCards>
 
+            <div className={fight} style={{ overflow: "hidden" }}>
+                {pokemonsFight.myPokemon ?
+                    <>
+                        <PokemonFight turn={turn} currentPlayer={currentPlayer} card={currentCard} cards={cards} setCards={setCards} endTurn={endTurn} />
+                    </>
+                    : null}
+            </div>
         </div>
     )
 }
