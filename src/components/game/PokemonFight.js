@@ -7,6 +7,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setFight, setFightPokemons } from '../../redux/slices/pokemonFightSlices';
 import { addAction } from '../../redux/slices/socketActionsSlices';
 import socket from '../../api/socket';
+import myPokemonWon from "../../audio/my-pokemon-won.wav"
+import myPokemonLost from "../../audio/my-pokemon-lost.wav"
+import PokemonHeal from "../../audio/heal.mp3"
+import hit from "../../audio/hit.mp3"
+import superHit from "../../audio/super.mp3"
 
 const BorderLinearProgress = styled(LinearProgress)(() => ({
     height: 18,
@@ -44,25 +49,31 @@ export default function PokemonFight({ turn, currentPlayer, card, endTurn, setCa
 
             socket.on("pokemon-play-turn", (newPokemons, method, attackingName, attackingEnemy, damage = 0) => {//update pokemons as new pokemons 
                 //send method to know what to show on screen attcking name and enemy to show who to dmg and how much
-                if (method === "hp") {
-                    setHeal({ healer: attackingName });
-                    setTimeout(() => setHeal({ healer: "" }), 1800);
-                    dispatch(setFightPokemons(newPokemons));
-                    return;
-                }
-                else if (method === "super") {
-                    setSuperAttack({ attacker: attackingName });
+                if (turn !== currentPlayer.number) {
+                    if (method === "hp") {
+                        new Audio(PokemonHeal).play();
+                        setHeal({ healer: attackingName });
+                        setTimeout(() => setHeal({ healer: "" }), 1800);
+                        dispatch(setFightPokemons(newPokemons));
+                        return;
+                    }
+                    else if (method === "super") {
+                        new Audio(superHit).play()
+                        setSuperAttack({ attacker: attackingName });
+                        setTimeout(() => {
+                            setDamage({ damaged: "" });
+                            setSuperAttack({ attacker: "" });
+                        }, 1800);
+                    }
+                    else { new Audio(hit).play() }
+                    setDamage({ damaged: attackingEnemy, damage: damage });
                     setTimeout(() => {
                         setDamage({ damaged: "" });
-                        setSuperAttack({ attacker: "" });
-                    }, 1800);
+                    }, 3200);
+                    dispatch(setFightPokemons(newPokemons));
+                    checkGenralWin(attackingName, newPokemons);
                 }
-                setDamage({ damaged: attackingEnemy, damage: damage });
-                setTimeout(() => {
-                    setDamage({ damaged: "" });
-                }, 3200);
-                dispatch(setFightPokemons(newPokemons));
-                checkGenralWin(attackingName, newPokemons);
+
             })
             dispatch(addAction("pokemon-play-turn"));
         }// eslint-disable-next-line
@@ -79,9 +90,11 @@ export default function PokemonFight({ turn, currentPlayer, card, endTurn, setCa
         if (newPokemons.myPokemon.hp <= 0 || newPokemons.enemy.hp <= 0) {
             if (attackingName === "myPokemon") {
                 setDie({ dead: "enemy" });
+                new Audio(myPokemonWon).play()
             }
             else {
                 setDie({ dead: "myPokemon" });
+                new Audio(myPokemonLost).play()
             }
             await wait(2000);
             dispatch(setFightPokemons({ pokemon: "" }));
@@ -155,6 +168,8 @@ export default function PokemonFight({ turn, currentPlayer, card, endTurn, setCa
         else if (method === "super") {
             if (!attacking.superPower.avilable)
                 return;
+            new Audio(superHit).play()
+
             damage = Math.floor(Math.random() * (attacking.attack - 15) + 20);
             def -= 5;
             flag = true;
@@ -167,7 +182,7 @@ export default function PokemonFight({ turn, currentPlayer, card, endTurn, setCa
             }, 1800);
 
         }
-
+        else { new Audio(hit).play() }
         damage = damage - def < 0 ? 0 : damage - def;
         setDamage({ damaged: attackingEnemy, damage: damage });
         setCanAttack(false);
@@ -207,7 +222,6 @@ export default function PokemonFight({ turn, currentPlayer, card, endTurn, setCa
         socket.emit("pokemon-play-turn", newPokemons, method, attackingName, attackingEnemy, damage);
         checkWin(attackingName, newPokemons, enemy);
     }
-    console.log(pokemons.enemy)
     const checkWin = async (attackingName, newPokemons, enemy = false) => {//check win and if the player won update the cards so that the player have the house
         //and end turn with new cards
         if (newPokemons.myPokemon.hp <= 0 || newPokemons.enemy.hp <= 0) {
@@ -222,9 +236,10 @@ export default function PokemonFight({ turn, currentPlayer, card, endTurn, setCa
                 newCards[card.pos].owner = currentPlayer.number;
                 newCards[card.pos].houses = 1;
                 setDie({ dead: "enemy" });
-
+                new Audio(myPokemonWon).play()
             }
             else {
+                new Audio(myPokemonLost).play()
                 setDie({ dead: "myPokemon" });
             }
 
@@ -268,7 +283,7 @@ export default function PokemonFight({ turn, currentPlayer, card, endTurn, setCa
             attackFunc("attack", pokemons.enemy, "enemy", "myPokemon", true);
         }
     }
-    console.log(superAttack)
+
     return (
         <>
             <div className="my-pokemon-fight">
@@ -285,7 +300,7 @@ export default function PokemonFight({ turn, currentPlayer, card, endTurn, setCa
                             <h2 className="damage">{damage.damage}</h2>
                         </div> : null}
                     {superAttack.attacker === "enemy" ? <div className="super-attack-animation-on-me">
-                        <img src={require(`../../images/fire-${pokemons.enemy.color}.gif`).default}></img>
+                        <img alt="pokemon-superattack" src={require(`../../images/fire-${pokemons.enemy.color}.gif`).default}></img>
                     </div>
                         : null}
                     <img className={die.dead === "myPokemon" ? "pokemon-dead" : damage.damaged === "enemy" ? "attack-animation" : null}
@@ -310,10 +325,11 @@ export default function PokemonFight({ turn, currentPlayer, card, endTurn, setCa
 
                 {damage.damaged === "enemy" ?
                     <div className="damage-div">
+                        {console.log(damage)}
                         <h2 className="damage">{damage.damage}</h2>
                     </div> : null}
                 <BorderLinearProgress style={{ colorPrimary: ((pokemons.enemy.hp / pokemons.myInitialHp) * 100) > 20 ? "red" : "green" }} variant="determinate" value={(pokemons.enemy.hp / pokemons.ememyInitalHp) * 100} />
-                {superAttack.attacker === "myPokemon" ? <div className="super-attack-animation-on-enemy" > <img src={require(`../../images/fire-${pokemons.myPokemon.color}.gif`).default}></img></div>
+                {superAttack.attacker === "myPokemon" ? <div className="super-attack-animation-on-enemy" > <img alt="special attack" src={require(`../../images/fire-${pokemons.myPokemon.color}.gif`).default}></img></div>
                     : null}
                 <img className={die.dead === "enemy" ? "pokemon-dead" : damage.damaged === "myPokemon" ? "attack-animation" : null}
                     src={require(`../../sprites-animations/${pokemons.enemy.name}-front.gif`).default} alt={pokemons.enemy.name} ></img>

@@ -213,3 +213,19 @@ export const checkWin = (players, turn, currentPlayer) => {
     return false;
 
 }
+
+export const playerLeave = (roomData,playerId, cards, players) => {
+    const playerLeft = [...players].find(val => val.socketId === playerId);
+    const newPlayers = players.filter(val => roomData.includes(val.socketId));
+    console.log(playerLeft);
+    const newCards = cards.map((val) => {
+        if (typeof val === "object") {
+            if (val.owner === playerLeft.number) {
+                val.houses = 0;
+                val.owner = null;
+            }
+        }
+        return val
+    })
+    return { newPlayers, newCards };
+}

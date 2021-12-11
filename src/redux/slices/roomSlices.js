@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 //Intial State
 const initialState = {
-    room: 0,
+    room: null,
 }
 
 const roomSlices = createSlice({

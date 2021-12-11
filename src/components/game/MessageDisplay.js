@@ -1,6 +1,36 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import win from "../../audio/win.wav";
+import moneyWin from "../../audio/money-win.mp3";
+import moneyLose from "../../audio/money-lose.wav";
+import loseGame from "../../audio/game-lose.wav";
+import winGame from "../../audio/game-win.wav";
 // import image from "../../sprites-animations"
 export default function MessageDisplay({ card, turn, currentPlayer }) {
+    useEffect(() => {
+        if (card.card === "win") {
+            new Audio(winGame).play();
+        }
+
+        else if (card.card === "lose") {
+            new Audio(loseGame).play();
+        }
+
+        else if (typeof card.card === "object" && card.haveToSell) {
+            new Audio(moneyLose).play();
+        }
+
+        else if (card.card === "prize" || (card.card === "card" && card.rnd <= 11 && card.rnd >= 8)) {
+            new Audio(moneyWin).play();
+        }
+        else if (card.card === "tax" || (card.card === "card" && card.rnd <= 7)) {
+            new Audio(moneyLose).play();
+        }
+
+        else if (card.card === "card" && card.rnd === 12) {
+            new Audio(win).play();
+        }
+
+    }, [card])
 
     if (card.card === "win" || card.card === "lost") {
         return (

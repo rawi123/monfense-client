@@ -11,13 +11,15 @@ import { setTurn } from '../../redux/slices/turnSlices';
 import { addAction, addActions } from "../../redux/slices/socketActionsSlices";
 import PlayersCards from './PlayersCards';
 import { Alert, Button } from '@mui/material';
-import { wait, updatePlayerPos, playTurn, setFreeFromJail, nextTurn, pay, sellPlayerHouses, checkWin } from './boradFunctionality/boardFunctionality';
+import { playerLeave, wait, updatePlayerPos, playTurn, setFreeFromJail, nextTurn, pay, sellPlayerHouses, checkWin } from './boradFunctionality/boardFunctionality';
 import MessageDisplay from './MessageDisplay';
 import Play from './Play';
 import { lostGame, winGame } from '../../api/userApi';
 import { setUser } from '../../redux/slices/userSlices';
 import PokemonFight from './PokemonFight';
 import { setFight, setFightPokemons } from '../../redux/slices/pokemonFightSlices';
+import fightStart from "../../audio/fight-start.wav"
+import Chat from './chat/Chat';
 
 export default function BoardContainer() {
     const navigate = useNavigate(),
@@ -49,28 +51,42 @@ export default function BoardContainer() {
             }
         })
         return (() => {
-
-            // socket.emit("socket-room", room => {
-            //     socket.emit("leave-room", room);
-            //     window.location.reload(false);
-            // })
+            socket.emit("socket-room", room => {
+                socket.emit("leave-room", room);
+                window.location.reload(false);
+            })
         })
         //eslint-disable-next-line
     }, [])
 
+
+
     useEffect(() => {//start fight but cant play just watch
         if (!actions.includes("fight-started")) {
+
             socket.on("fight-started", (pokemonFight) => {
-                // setCurrentCard({ card: "" });
+                new Audio(fightStart).play();
                 dispatch(setFightPokemons(pokemonFight));
                 dispatch(setFight("pokemon-fight"));
             })
             dispatch(addAction("fight-started"));
         }// eslint-disable-next-line
     }, [])
-
     useEffect(() => {
-        if (actions.length && cards.length && socketEnabled && !actions.includes("player-move") && !actions.includes("next-turn")) {
+        if (actions.length && cards.length && socketEnabled && players.length
+            && !actions.includes("player-move")
+            && !actions.includes("next-turn")
+            && !actions.includes("player-left")) {
+
+            socket.on("player-left", (roomData, playerId, cards) => {
+                if (currentPlayer.socketId !== playerId) {
+                    const { newPlayers, newCards } = playerLeave(roomData, playerId, cards, players);
+                    dispatch(setPlayers({ players: newPlayers }));
+                    setCards(newCards);
+                    socket.emit("next-turn", turn - 1, newPlayers, newCards);
+                }
+            })
+
             socket.on("player-move", (oldPos, sum, turn, players, updatedPlayers, diceArr, cardsProp) => {
                 setDiceRoll(diceArr);
                 setPlayerPlayingTurn(turn);
@@ -123,10 +139,10 @@ export default function BoardContainer() {
                 dispatch(setTurn(turn))
                 dispatch(setPlayers({ players }))
             })
-            dispatch(addActions(["next-turn", "player-move"]))
+            dispatch(addActions(["next-turn", "player-move", "player-left"]))
         }
         // eslint-disable-next-line
-    }, [actions, cards])
+    }, [actions, cards, players])
 
 
 
@@ -134,6 +150,7 @@ export default function BoardContainer() {
         if (!enableDice) {
             return
         }
+
         setEnableDice(false);
         setEnablePlay(false);
 
@@ -205,7 +222,7 @@ export default function BoardContainer() {
             setCurrentPlayer({ currentPlayer: null });
             setCurrentCard({ card: "lost" });
 
-            if (user.username !== "guest") {
+            if (user.username !== "Guest") {
                 const data = await lostGame(user);
                 dispatch(setUser({ user: data }));
             }
@@ -275,6 +292,7 @@ export default function BoardContainer() {
                     </>
                     : null}
             </div>
+            <Chat/>
         </div>
     )
 }

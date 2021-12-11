@@ -17,6 +17,7 @@ import BoardContainer from "./components/game/BoardContainer";
 import {setSocketEnabled} from "./redux/slices/socketRunSlices";
 import { getPokemons } from "./api/pokemonApi";
 import { setPokemons } from "./redux/slices/pokemonSlices";
+import ScoreBoard from "./components/scoreBoard/ScoreBoard";
 
 function App() {
   const dispatch = useDispatch();
@@ -44,6 +45,7 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/signin" element={<Signin />} />
         <Route path="/game" element={<Menu />} />
+        <Route path="/score-board" element={<ScoreBoard />} />
         <Route path="/game-playing-online" element={<BoardContainer />} />
         <Route path="/game-online" element={<WaitingRoom />} />
 

@@ -6,7 +6,7 @@ import axios from 'axios';
 
 export const getUser = async () => {
     try {
-        const res = await fetchWithAuth('/user/me', {},"get");
+        const res = await fetchWithAuth('/user/me', {}, "get");
         return res.data;
     }
     catch (err) {
@@ -16,7 +16,7 @@ export const getUser = async () => {
 
 export const register = async ({ username, password }) => {
     try {
-        await fetchWithAuth("/user/register", { username, password },"post");
+        await fetchWithAuth("/user/register", { username, password }, "post");
         return true;
     }
     catch (err) {
@@ -25,7 +25,7 @@ export const register = async ({ username, password }) => {
 }
 export const login = async ({ username, password }) => {
     try {
-        const res = await fetchWithAuth("/user/login", { username, password },"post");
+        const res = await fetchWithAuth("/user/login", { username, password }, "post");
         localStorage.setItem("token", res.data.token);
         return res.data.user;
     }
@@ -37,7 +37,7 @@ export const login = async ({ username, password }) => {
 
 export const logout = async () => {
     try {
-        await fetchWithAuth("/user/logout",{},"post");
+        await fetchWithAuth("/user/logout", {}, "post");
         localStorage.removeItem("token");
     }
     catch (err) {
@@ -46,7 +46,7 @@ export const logout = async () => {
 }
 export const buyPokemon = async (id) => {
     try {
-        const res = await fetchWithAuth("/user/add-pokemon/" + id,{},"post");
+        const res = await fetchWithAuth("/user/add-pokemon/" + id, {}, "post");
         return res.data;
     }
     catch (err) {
@@ -54,20 +54,25 @@ export const buyPokemon = async (id) => {
     }
 }
 
-export const lostGame=async(user)=>{
-    if(user.username!=="guest"){
-        const res = await fetchWithAuth("/user/add-game",{},"post");
+export const lostGame = async (user) => {
+    if (user.username !== "Guest") {
+        const res = await fetchWithAuth("/user/add-game", {}, "post");
         return res.data;
     }
     return user;
 }
 
-export const winGame=async(user)=>{
-    if(user.username!=="guest"){
-        const res = await fetchWithAuth("/user/add-win",{},"post");
+export const winGame = async (user) => {
+    if (user.username !== "Guest") {
+        const res = await fetchWithAuth("/user/add-win", {}, "post");
         return res.data;
     }
     return user;
+}
+
+export const scoreBoard = async () => {
+    const res = await fetchWithAuth("/user/score-board", {}, "get");
+    return res.data;
 }
 
 

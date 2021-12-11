@@ -46,10 +46,12 @@ export default function WaitingRoom() {
     const [rooms, setRooms] = React.useState([]);
     const [tableClass, setTableClass] = React.useState("");
     const [currentRoom, setCurrentRoom] = React.useState("");
+    const [roomData, setRoomData] = React.useState([]);
     const [images] = React.useState(['blue', 'yellow', 'red', 'green']);
     const { pokemons } = useSelector(state => state.pokemons);
     const { user } = useSelector(state => state.user);
     const { actions } = useSelector(state => state.socketActions);
+    const { players } = useSelector(state => state.players);
     const navigate = useNavigate();
 
     const dispatch = useDispatch();
@@ -59,28 +61,39 @@ export default function WaitingRoom() {
         socket.on("return-rooms", (rooms) => {
             setRooms(rooms)
         })
-
+        socket.on("add-player", (player) => {
+            dispatch(addPlayer({ player }))
+        })
+        // eslint-disable-next-line
     }, [])
+
+    React.useEffect(() => {//only when added all players in right place start game
+        const sum = [...players].reduce((sum, val) => sum = val ? sum + 1 : sum, 0);
+        if (roomData.length && sum === roomData.length)
+            navigate("/game-playing-online");
+        // eslint-disable-next-line
+    }, [players])
 
     React.useEffect(() => {//play game set all players in redux state navigate to game and add the relevant pokemons
         dispatch(setPlayers({ players: [] }));
         if (!actions.includes("play-game") && user && pokemons) {
             dispatch(addAction("play-game"));
             socket.on("play-game", (roomData, roomName) => {
+                setRoomData(roomData);
                 dispatch(setRoom(roomName));
                 roomData.map((val, i) => {
-                    const player = { number: i, img: images[i], pos: 0, socketId: val, pokemons: [], ownedLands: [], money: 5000, jail: false };
+                    const player = { number: i, img: images[i], pos: 0, socketId: val, pokemons: [], ownedLands: [], money: 15000, jail: false };
                     if (socket.id === val) {
                         player.pokemons = user.pokemons;
                         if (player.pokemons.length === 0) {
                             player.pokemons = addRandomPokemon();
                         }
                         dispatch(setCurrentPlayer({ currentPlayer: player }));
+                        socket.emit("add-player", roomName, player);
                     }
-                    dispatch(addPlayer({ player }))
                     return 1;
                 })
-                navigate("/game-playing-online");
+
             })
         }// eslint-disable-next-line
     }, [user, pokemons])

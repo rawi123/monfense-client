@@ -59,11 +59,11 @@ export default function Menu() {
                     }}>
                         Play Online
                     </Button>
-                    {/* <Button component={Link} to="/game-offline" variant="contained" endIcon={<CasinoIcon />} sx={{
+                    <Button component={Link} to="/score-board" variant="contained" endIcon={<CasinoIcon />} sx={{
                         mt: "4%", width: "25%", height: "8vh", background: "#AE0907", '&:hover': { backgroundColor: '#5C3250' }
                     }}>
-                        Play offline
-                    </Button> */}
+                        Score board
+                    </Button>
                     {user.user?.username !== "Guest" ? <><Button variant="contained" endIcon={<StoreIcon />} onClick={openStore} sx={{
                         mt: "4%", width: "25%", height: "8vh", background: "#AE0907", '&:hover': { backgroundColor: '#5C3250' }
                     }}>

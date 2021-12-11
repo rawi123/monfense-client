@@ -21,6 +21,7 @@ export default function Land({ classGive, cardNumber, children, haveToSell }) {
                         return <img alt="img" key={val.socketId} src={val.number === 0 ? playerBlue : val.number === 1 ? playerYellow : val.number === 2 ? playerRed : playerGreen}
                             className={`soldier player${val.number}`} style={{ background: val.number === currentPlayer.number ? "green" : null }}></img>
                     }
+                    return null;
                 })}
             </div>
         </div>

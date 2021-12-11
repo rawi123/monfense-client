@@ -15,6 +15,7 @@
     "@testing-library/user-event": "^12.8.3",
     "axios": "^0.24.0",
     "react": "^17.0.2",
+    "react-chat-widget": "^3.1.4",
     "react-dice-complete": "^1.2.1",
     "react-dom": "^17.0.2",
     "react-redux": "^7.2.6",
@@ -24,6 +25,7 @@
     "socket.io-client": "^4.4.0",
     "styled-components": "^5.3.3",
     "use-fit-text": "^2.4.0",
+    "use-sound": "^4.0.1",
     "uuid": "^8.3.2",
     "web-vitals": "^1.1.2"
   },

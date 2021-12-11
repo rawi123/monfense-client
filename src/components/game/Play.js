@@ -59,7 +59,6 @@ export default function Play({ card, currentPlayer, endTurn, setCards, turn, car
         }
     }
 
-    console.log(card.card)
     if (card.card === "store") {
         return (
             <div className="flex column">

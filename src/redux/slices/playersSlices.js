@@ -14,7 +14,7 @@ const playersSlices = createSlice({
             state.players = action.payload.players;
         },
         addPlayer: (state, action) => {
-            state.players.push(action.payload.player);
+            state.players[action.payload.player.number] = action.payload.player;
         }
     }
 

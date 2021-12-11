@@ -514,6 +514,7 @@ strong {
     align-items: center;
     justify-content: center;
     overflow: visible;
+    z-index: 150;
 }
 
 
