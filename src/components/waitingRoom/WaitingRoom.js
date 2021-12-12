@@ -52,6 +52,7 @@ export default function WaitingRoom() {
     const { user } = useSelector(state => state.user);
     const { actions } = useSelector(state => state.socketActions);
     const { players } = useSelector(state => state.players);
+    const { room } = useSelector(state => state.room);
     const navigate = useNavigate();
 
     const dispatch = useDispatch();
@@ -69,8 +70,11 @@ export default function WaitingRoom() {
 
     React.useEffect(() => {//only when added all players in right place start game
         const sum = [...players].reduce((sum, val) => sum = val ? sum + 1 : sum, 0);
-        if (roomData.length && sum === roomData.length)
+        console.log(roomData, sum)
+        if (roomData.length && sum === roomData.length) {
             navigate("/game-playing-online");
+            socket.emit("set-players", players, room);
+        }
         // eslint-disable-next-line
     }, [players])
 

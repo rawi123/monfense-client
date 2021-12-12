@@ -55,6 +55,7 @@ export default function Room({ roomProp, setTableClass }) {
     }
 
     const startGame = () => {
+        console.log(room[0])
         if (room[1].length >= 2)
             socket.emit("start-game", room[0])
 

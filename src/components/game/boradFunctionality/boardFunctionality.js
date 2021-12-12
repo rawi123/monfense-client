@@ -207,7 +207,10 @@ export const sellPlayerHouses = (cards, players, currentPlayer) => {
 
 
 export const checkWin = (players, turn, currentPlayer) => {
-    if (players.length === 1 && currentPlayer.number === turn) {
+    const sumPlayers=players.reduce((sum,val)=>{
+        return sum=val.number!==undefined?sum+1:sum
+    },0);
+    if (sumPlayers=== 1 && currentPlayer.number === turn) {
         return true;
     }
     return false;
@@ -216,7 +219,6 @@ export const checkWin = (players, turn, currentPlayer) => {
 
 export const playerLeave = (roomData,playerId, cards, players) => {
     const playerLeft = [...players].find(val => val.socketId === playerId);
-
     const newPlayers = players.map(val => {
         if(!roomData.includes(val.socketId)){
             val={};
