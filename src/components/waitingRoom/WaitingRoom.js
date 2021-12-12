@@ -101,7 +101,6 @@ export default function WaitingRoom() {
     const addRandomPokemon = () => {
         const pokemonsUnder10k = pokemons.filter(pokemon => pokemon.cost < 10000);
         return [{ ...pokemonsUnder10k[Math.floor(Math.random() * pokemonsUnder10k.length)], roundsPassed: 1 }];
-
     }
 
     const createRoom = async () => {//create new room
