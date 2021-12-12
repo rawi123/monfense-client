@@ -62,15 +62,18 @@ export default function WaitingRoom() {
         socket.on("return-rooms", (rooms) => {
             setRooms(rooms)
         })
-        socket.on("add-player", (player) => {
-            dispatch(addPlayer({ player }))
-        })
+        if(!actions.includes("add-player")){
+            socket.on("add-player", (player) => {
+                dispatch(addPlayer({ player }))
+            })
+            dispatch(addAction("add-player"))
+        }
+
         // eslint-disable-next-line
     }, [])
 
     React.useEffect(() => {//only when added all players in right place start game
         const sum = [...players].reduce((sum, val) => sum = val ? sum + 1 : sum, 0);
-        console.log(roomData, sum)
         if (roomData.length && sum === roomData.length) {
             navigate("/game-playing-online");
             socket.emit("set-players", players, room);
