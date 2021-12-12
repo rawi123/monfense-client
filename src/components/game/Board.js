@@ -39,7 +39,7 @@ export default function Board({ cards, setCards, haveToSell }) {
                     return <Land key={i} haveToSell={haveToSell} classGive={`land${i + 1}`} cardNumber={i} children={<TaxPrize card={cards[i]} cardNumber={i} />} />
                 }
                 if (cards[i] === "store") {
-                    return <Land key={i} haveToSell={haveToSell} classGive={`land${i + 1}`} cardNumber={i} children={<StoreLand card={cards[i]} />} />
+                    return <Land key={i} haveToSell={haveToSell} classGive={`land${i + 1}`} cardNumber={i} children={<StoreLand />} />
                 }
                 if (cards[i] === "card") {
                     return <Land key={i} haveToSell={haveToSell} classGive={`land${i + 1}`} cardNumber={i} children={<LuckyLand />} />

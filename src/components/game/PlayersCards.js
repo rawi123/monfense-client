@@ -9,12 +9,12 @@ export default function PlayersCards({ players, currentPlayer, haveToSell, turn 
     const [classPut, setClassPut] = useState("player-card");
 
     useEffect(() => {
-        if (haveToSell&&turn===currentPlayer.number){
+        if (haveToSell && turn === currentPlayer.number) {
             setClassPut("player-card-backwards")
-            setTimeout(()=>setClassPut("player-card"),3000)
+            setTimeout(() => setClassPut("player-card"), 3000)
         }// eslint-disable-next-line
     }, [haveToSell])
-    
+
     return (<>
         {players.map((val, i) => {
             if (val.number === currentPlayer.number) {
@@ -33,7 +33,7 @@ export default function PlayersCards({ players, currentPlayer, haveToSell, turn 
                 </div>
                 )
             }
-            if(!val.number)
+            if (!val.number && val.number !== 0)
                 return "";
             return (
                 <div style={{

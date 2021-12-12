@@ -78,9 +78,9 @@ export default function BoardContainer() {
             && !actions.includes("next-turn")
             && !actions.includes("player-left")) {
 
-            socket.on("player-left", (roomData, playerId, cards) => {
+            socket.on("player-left", (roomData, playerId, cards,playersProp) => {
                 if (currentPlayer.socketId !== playerId) {
-                    const { newPlayers, newCards } = playerLeave(roomData, playerId, cards, players);
+                    const { newPlayers, newCards } = playerLeave(roomData, playerId, cards, playersProp);
                     dispatch(setPlayers({ players: newPlayers }));
                     setCards(newCards);
                     socket.emit("next-turn", turn - 1, newPlayers, newCards);

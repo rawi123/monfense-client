@@ -84,7 +84,7 @@ export default function WaitingRoom() {
                 roomData.map((val, i) => {
                     const player = { number: i, img: images[i], pos: 0, socketId: val, pokemons: [], ownedLands: [], money: 15000, jail: false };
                     if (socket.id === val) {
-                        player.pokemons = user.pokemons;
+                        player.pokemons = [...user.pokemons.map(val => { return { ...val, roundsPassed: 0 } })];
                         if (player.pokemons.length === 0) {
                             player.pokemons = addRandomPokemon();
                         }
@@ -100,7 +100,8 @@ export default function WaitingRoom() {
 
     const addRandomPokemon = () => {
         const pokemonsUnder10k = pokemons.filter(pokemon => pokemon.cost < 10000);
-        return [pokemonsUnder10k[Math.floor(Math.random() * pokemonsUnder10k.length)]];
+        return [{ ...pokemonsUnder10k[Math.floor(Math.random() * pokemonsUnder10k.length)], roundsPassed: 1 }];
+
     }
 
     const createRoom = async () => {//create new room

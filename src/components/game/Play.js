@@ -50,7 +50,7 @@ export default function Play({ card, currentPlayer, endTurn, setCards, turn, car
 
         if (currentPlayerTemp.money > pokemon.cost) {
             currentPlayerTemp.money -= pokemon.cost;
-            currentPlayerTemp.pokemons = [...currentPlayerTemp.pokemons, pokemon];
+            currentPlayerTemp.pokemons = [...currentPlayerTemp.pokemons, {pokemon,roundsPassed:1}];
             dispatch(setCurrentPlayer({ currentPlayer: currentPlayerTemp }));
             setCurrentState(currentPlayerTemp)
         }
