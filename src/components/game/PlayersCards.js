@@ -33,6 +33,8 @@ export default function PlayersCards({ players, currentPlayer, haveToSell, turn 
                 </div>
                 )
             }
+            if(!val.number)
+                return "";
             return (
                 <div style={{
                     background: val.number === 0 ? "blue" : val.number === 1 ? "yellow" : val.number === 2 ? "red" : "greem",
