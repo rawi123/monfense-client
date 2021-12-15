@@ -33,4 +33,4 @@ To buy the house you need to fight a little battle againts the land owner in add
 
 ### Auth:
 
-adds the user object in addition to the token to request.body if the client sent a valid json web token.<br />
+adds the user object in addition to the token to request.user,request.token if the client sent a valid json web token.<br />
