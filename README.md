@@ -29,7 +29,6 @@ To buy the house you need to fight a little battle againts the land owner in add
 
 
 
-# Midllewares
 
 ### Auth:
 
