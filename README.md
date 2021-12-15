@@ -30,6 +30,15 @@ To buy the house you need to fight a little battle againts the land owner in add
 
 
 
+# Socket
+
+---
+
+## BaseURL: https://monofense-socket.herokuapp.com/
+
+
+
+
 ### Auth:
 
 adds the user object in addition to the token to request.user,request.token if the client sent a valid json web token.<br />
