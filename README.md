@@ -35,7 +35,7 @@ adds the user object in addition to the token to request.user,request.token if t
 
 ### Security
 
-hashing the user password using bcrypt for extra safty.<br />
+hashing the user password using bcrypt for extra safety.<br />
 
 
 # Socket
